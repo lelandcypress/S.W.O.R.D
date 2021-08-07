@@ -3,4 +3,5 @@ const sequelize = require('../config/connection');
 
 
 
+
 module.exports = Project;
