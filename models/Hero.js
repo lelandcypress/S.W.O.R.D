@@ -1,9 +1,9 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-class Mission extends Model {}
+class Hero extends Model {}
 
-Mission.init(
+Hero.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -15,28 +15,21 @@ Mission.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    location: {
+    secret_identity: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    description: {
+    organization: {
       type: DataTypes.STRING,
+      allowNull: true,
     },
-    priority: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    status: {
+    powers: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    hero_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'hero',
-        key: 'id',
-      },
+    weakness: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
   },
   {
@@ -44,8 +37,8 @@ Mission.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'mission',
+    modelName: 'hero',
   }
 );
 
-module.exports = Mission;
+module.exports = Hero;
