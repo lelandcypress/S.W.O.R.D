@@ -31,6 +31,13 @@ Hero.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    mission_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'mission',
+        key: 'id',
+      },
+    },
   },
   {
     sequelize,

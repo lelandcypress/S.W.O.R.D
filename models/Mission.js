@@ -30,14 +30,6 @@ Mission.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    hero_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'hero',
-        key: 'id',
-      },
-    },
   },
   {
     sequelize,
