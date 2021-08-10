@@ -34,7 +34,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/mission/:id', async (req, res) => {
+router.get('/mission/:id', withAuth, async (req, res) => {
   try {
     // Get specific mission
     const selectedMissionData = await Mission.findByPk(req.params.id, {
@@ -43,10 +43,10 @@ router.get('/mission/:id', async (req, res) => {
           ['id', 'mission_id'],
           ['name', 'mission_name'],
           'location',
-          'date_created',
           'priority',
           'status',
           'description',
+          'date_created',
         ],
       },
       include: [
@@ -60,7 +60,7 @@ router.get('/mission/:id', async (req, res) => {
     // Serialize data so the template can read it
     const mission = selectedMissionData.get({ plain: true });
 
-    res.status(200).render('homepage', mission);
+    res.status(200).render('mission', mission);
   } catch (err) {
     res.status(500).json(err);
   }
