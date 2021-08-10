@@ -11,4 +11,8 @@ Mission.hasMany(Hero, {
   foreignKey: 'mission_id',
 });
 
+Hero.belongsTo(Mission, {
+  foreignKey: 'mission_id',
+});
+
 module.exports = { Hero, Mission, User };
