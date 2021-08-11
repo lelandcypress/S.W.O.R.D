@@ -1,30 +1,51 @@
 <div class="row">
   <div class="col-auto">
-    <h2>Welcome, {{Hero.name}}!</h2>
+    <h2>Welcome {{this.hero.hero_name}}</h2>
   </div>
 </div>
 
 <div class="row mt-4">
   <div class="col-md-6">
+<table>
     <h3>User Profile</h3>
-
+  <tr>
+  <td>Secret Identity: {{this.hero.secret_identity}}</td>
+  </tr>
+  <tr>
+  <td>Organization: {{this.hero.organization}}</td>
+  </tr>
+  <tr>
+  <td>Powers: {{this.hero.powers}}</td>
+  </tr>
+  <tr>
+  <td>Weakness: {{this.hero.weakness}}</td>
+  </tr>
+</table>
     
   </div>
 
-  {{#if mission}}
+  {{#if this.hero.mission}}
   <div class="col-md-6 project-list">
-    <h3>Current Mission:</h3>
+<table>
+    <h3>Current Ticket</h3>
+<tr>
+  <td>Mission: {{this.hero.mission.mission_name}}</td>
+</tr>
+<tr>
+  <td>Description: {{this.hero.mission.description}} </td>
+</tr>
+<tr>
+  <td>Location: {{this.hero.mission.location}}</td>
+  </tr>
+<tr>
+  <td>Date Reported: {{format_date this.hero.mission.date_created}}</td>
+  </tr>
+<tr>
+  <td>Status: {{this.hero.mission.status}}</td>
+</tr>
+</table>
 
-    {{#each projects as |project|}}
-    <div class="row mb-2">
-      <div class="col-md-8">
-        <h4><a href="/project/{{project.id}}">{{project.name}}</a></h4>
-      </div>
-      <div class="col-md-4">
-        <button class="btn btn-sm btn-danger" data-id="{{project.id}}">DELETE</button>
-      </div>
-    </div>
-    {{/each}}
+   
   </div>
   {{/if}}
 </div>
