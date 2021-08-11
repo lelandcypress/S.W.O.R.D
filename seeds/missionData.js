@@ -7,7 +7,8 @@ const missionData = [
     description: 'Joker is getting away',
     priority: 'Critical',
     status: 'Active',
-    hero_id: 2,
+    date_created: '08 / 04 / 2021',
+    
   },
   {
     name: 'Stop Magneto',
@@ -15,7 +16,8 @@ const missionData = [
     description: 'Magneto is using his powers to steal hubcaps',
     priority: 'Critical',
     status: 'Active',
-    hero_id: 5,
+    date_created:' 08 / 04 / 2021',
+    
   },
 ];
 
