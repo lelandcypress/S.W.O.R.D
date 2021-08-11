@@ -20,14 +20,33 @@ router.get('/', async (req, res) => {
         {
           model: Hero,
           attributes: ['name'],
+          raw:true,
+          nest: true,
         },
       ],
       order: [['date_created', 'DESC']],
     });
-
+    let missions = [];
     // Serialize data so the template can read it
-    const missions = currentMissionData.map((x) => x.get({ plain: true }));
+    currentMissionData.map((x) => x.get({ plain: true })).map((x) =>{ 
+      console.log(x.heros[0].name);
+      missions.push(
+      {
+        id: x.id,
+        name: x.name,
+        location: x.location,
+        description: x.description,
+        status: x.status,
+        date_created: x.date_created,
+        priority: x.priority,
+        mission_id: x.mission_id,
+        mission_name: x.mission_name,
+        heros: x.heros[0].name,
 
+      }
+
+    )});
+    console.log(missions);
     res.status(200).render('homepage', { missions });
   } catch (err) {
     res.status(500).json(err);
