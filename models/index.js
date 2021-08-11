@@ -10,7 +10,6 @@ Hero.hasOne(User, {
   foreignKey: 'hero_id',
   onDelete: 'CASCADE',
 });
-
 Mission.hasMany(Hero, {
   foreignKey: 'mission_id',
 });
