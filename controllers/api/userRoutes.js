@@ -1,9 +1,36 @@
 const router = require('express').Router();
-const { User } = require('../../models');
+const { User, Hero } = require('../../models');
 
 router.post('/', async (req, res) => {
   try {
-    const userData = await User.create(req.body);
+
+    const {
+      username,
+      email,
+      password,
+      name,
+      secret_identity,
+      organization,
+      powers,
+      weakness
+    } = req.body;
+
+    const userData = await User.create({
+      username: username,
+      email: email,
+      password: password,
+      hero: {
+        name: name,
+        secret_identity: secret_identity,
+        organization: organization,
+        powers: powers,
+        weakness: weakness
+      }
+    },{
+      include: [{
+        association: User.belongsTo(Hero)
+      }]
+    });
 
     req.session.save(() => {
       req.session.user_id = userData.id;
