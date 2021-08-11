@@ -1,15 +1,42 @@
 const router = require('express').Router();
-const { User } = require('../../models');
+const { User, Hero } = require('../../models');
 
 router.post('/', async (req, res) => {
   try {
-    const userData = await User.create(req.body);
+
+    const {
+      username,
+      email,
+      password,
+      name,
+      secret_identity,
+      organization,
+      powers,
+      weakness
+    } = req.body;
+
+    const newUser = await User.create({
+      username: username,
+      email: email,
+      password: password,
+      hero: {
+        name: name,
+        secret_identity: secret_identity,
+        organization: organization,
+        powers: powers,
+        weakness: weakness
+      }
+    }, {
+      include: [{
+        association: User.belongsTo(Hero)
+      }]
+    });
 
     req.session.save(() => {
-      req.session.user_id = userData.id;
+      req.session.user_id = newUser.id;
       req.session.logged_in = true;
 
-      res.status(200).json(userData);
+      res.status(200).json(newUser);
     });
   } catch (err) {
     res.status(400).json(err);
