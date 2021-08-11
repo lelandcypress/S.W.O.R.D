@@ -1,30 +1,33 @@
 <div class="row">
   <div class="col-auto">
-    <h2>Welcome, {{Hero.name}}!</h2>
+    <h2>Welcome {{this.hero.hero_name}}</h2>
   </div>
 </div>
 
 <div class="row mt-4">
   <div class="col-md-6">
     <h3>User Profile</h3>
-
+<ul>
+  <li>Secret Identity: {{this.hero.secret_identity}}</li>
+  <li>Organization: {{this.hero.organization}}</li>
+  <li>Powers: {{this.hero.powers}}</li>
+  <li>Weakness: {{this.hero.weakness}}</li>
+</ul>
     
   </div>
 
-  {{#if mission}}
+  {{#if this.hero.mission}}
   <div class="col-md-6 project-list">
-    <h3>Current Mission:</h3>
+    <h3>Current Ticket:</h3>
+<ul>
+  <li>Mission: {{this.hero.mission.mission_name}}</li>
+  <li>Description:{{this.hero.mission.description}} </li>
+  <li>Location: {{this.hero.mission.location}}</li>
+  <li>Date Reported: {{format_date this.hero.mission.date_created}}</li>
+  <li>Status: {{this.hero.mission.status}}</li>
+</ul>
 
-    {{#each projects as |project|}}
-    <div class="row mb-2">
-      <div class="col-md-8">
-        <h4><a href="/project/{{project.id}}">{{project.name}}</a></h4>
-      </div>
-      <div class="col-md-4">
-        <button class="btn btn-sm btn-danger" data-id="{{project.id}}">DELETE</button>
-      </div>
-    </div>
-    {{/each}}
+   
   </div>
   {{/if}}
 </div>

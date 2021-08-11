@@ -14,6 +14,7 @@ const heroData = [
     organization: 'Justice League',
     powers: 'Gadgets and Martial Arts',
     weakness: 'Bullets',
+    mission_id: 1,
   },
   {
     name: 'Spiderman',
@@ -35,6 +36,7 @@ const heroData = [
     organization: 'X-Men',
     powers: 'Adimantium Skeleton',
     weakness: 'Bad Temper',
+    mission_id: 2,
   },
 ];
 

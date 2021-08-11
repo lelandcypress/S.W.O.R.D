@@ -8,7 +8,7 @@ const missionData = [
     priority: 'Critical',
     status: 'Active',
     date_created: '08 / 04 / 2021',
-    hero_id: 2,
+    
   },
   {
     name: 'Stop Magneto',
@@ -17,7 +17,7 @@ const missionData = [
     priority: 'Critical',
     status: 'Active',
     date_created:' 08 / 04 / 2021',
-    hero_id: 5,
+    
   },
 ];
 
