@@ -1,42 +1,101 @@
-<div class="row">
-  <div class="col-md-6">
-    <h2>Login</h2>
+<div class="row h-100">
+  <div class="col text-center my-auto">
+    <div>
+      <img src="./images/sword_logo.png">
+    </div>
 
     <form class="form login-form">
-      <div class="form-group">
-        <label for="email-login">email:</label>
-        <input class="form-input" type="text" id="email-login" />
+      <div class="form-group mb-2">
+        <input class="form-input" type="text" id="email-login" placeholder="email" />
+      </div>
+      <div class="form-group mb-2">
+        <input class="form-input" type="password" id="password-login" placeholder="password" />
       </div>
       <div class="form-group">
-        <label for="password-login">password:</label>
-        <input class="form-input" type="password" id="password-login" />
-      </div>
-      <div class="form-group">
-        <button class="btn btn-primary" type="submit">login</button>
+        <button class="btn btn-outline-dark" type="submit">Login</button>
       </div>
     </form>
+    <div>
+      <p>new? sign up <span class="modal-launch" data-bs-toggle="modal" data-bs-target="#exampleModal">here</span></p>
+    </div>
   </div>
-  <div class="col-md-6">
-    <h2>Signup</h2>
+  <!-- Signup Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Hero Sign-Up</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form role="form">
+            <input type="hidden" name="_token" value="">
 
-    <form class="form signup-form">
-      <div class="form-group">
-        <label for="name-signup">name:</label>
-        <input class="form-input" type="text" id="name-signup" />
+            <div class="form-group">
+              <label class="control-label">Username</label>
+              <div>
+                <input id="signup-username" type="text" class="form-control input-lg" name="username" value="">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label">Email Address</label>
+              <div>
+                <input id="signup-email" type="email" class="form-control input-lg" name="email" value="">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label">Password</label>
+              <div>
+                <input id="signup-password" type="password" class="form-control input-lg" name="password">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label">Hero Name</label>
+              <div>
+                <input id="signup-hero-name" type="text" class="form-control input-lg" name="name">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label">Secret Identity</label>
+              <div>
+                <input id="signup-here-secretid" type="password" class="form-control input-lg" name="secret-identity">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label">Organization</label>
+              <div>
+                <input id="signup-organization" type="text" class="form-control input-lg" name="organization">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label">Powers</label>
+              <div>
+                <input id="signup-powers" type="text" class="form-control input-lg" name="powers">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label">Weakness</label>
+              <div>
+                <input id="signup-weakness" type="text" class="form-control input-lg" name="weakness">
+              </div>
+            </div>
+
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Submit</button>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="email-signup">email:</label>
-        <input class="form-input" type="text" id="email-signup" />
-      </div>
-      <div class="form-group">
-        <label for="password-signup">password:</label>
-        <input class="form-input" type="password" id="password-signup" />
-      </div>
-      <div class="form-group">
-        <button class="btn btn-primary" type="submit">signup</button>
-      </div>
-    </form>
+    </div>
   </div>
-</div>
 
-<script src="./js/login.js"></script>
+  <script src="./js/login.js"></script>
