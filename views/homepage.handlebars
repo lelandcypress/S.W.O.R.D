@@ -1,4 +1,4 @@
-<!-- Loop over each object in the mission array -->
+
 <form action="/mission">
     <input type="submit" value="Create Mission" />
 </form>
@@ -16,7 +16,7 @@
     </tr>
   </thead>
     <tbody>
-    
+    <!-- Loop over each object in the mission array -->
 {{#each missions as |mission| }}
 <tr class="table-secondary">
       <th scope="row"><a href="/mission/{{mission.mission_id}}">{{mission.mission_id}}</a></th>
