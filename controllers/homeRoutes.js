@@ -47,7 +47,10 @@ router.get('/', async (req, res) => {
 
     )});
     console.log(missions);
-    res.status(200).render('homepage', { missions });
+    res.status(200).render('homepage', {
+      missions,
+      logged_in: req.session.logged_in
+    });
   } catch (err) {
     res.status(500).json(err);
   }
@@ -79,7 +82,10 @@ router.get('/mission/:id', withAuth, async (req, res) => {
     // Serialize data so the template can read it
     const mission = selectedMissionData.get({ plain: true });
 
-    res.status(200).render('mission', mission);
+    res.status(200).render('mission', {
+      ...mission,
+      logged_in: req.session.logged_in
+    });
   } catch (err) {
     res.status(500).json(err);
   }
