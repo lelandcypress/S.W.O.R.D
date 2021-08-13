@@ -80,7 +80,10 @@ router.get('/mission/:id', withAuth, async (req, res) => {
     });
 
     // Serialize data so the template can read it
-    const mission = selectedMissionData.get({ plain: true });
+    let mission = selectedMissionData.get({ plain: true });
+    const heroname = mission.heros[0].name;
+    mission.hero = heroname;
+
 
     res.status(200).render('mission', {
       ...mission,
