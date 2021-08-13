@@ -15,8 +15,9 @@
         <button class="btn btn-outline-dark" type="submit">Login</button>
       </div>
     </form>
-    <div>
-      <p>new? sign up <span class="modal-launch" data-bs-toggle="modal" data-bs-target="#exampleModal">here</span></p>
+    <div class="mt-2">
+      <p>new? sign up <span class="modal-launch" data-bs-toggle="modal" data-bs-target="#exampleModal">here</span>
+      </p>
     </div>
   </div>
   <!-- Signup Modal -->
@@ -28,9 +29,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form role="form">
-            <input type="hidden" name="_token" value="">
-
+          <form role="form" class="signup-form">
             <div class="form-group">
               <label class="control-label">Username</label>
               <div>
@@ -62,7 +61,7 @@
             <div class="form-group">
               <label class="control-label">Secret Identity</label>
               <div>
-                <input id="signup-here-secretid" type="password" class="form-control input-lg" name="secret-identity">
+                <input id="signup-hero-secretid" type="password" class="form-control input-lg" name="secret-identity">
               </div>
             </div>
 
@@ -86,13 +85,15 @@
                 <input id="signup-weakness" type="text" class="form-control input-lg" name="weakness">
               </div>
             </div>
-
+            <div class="form-group">
+              <button class="mt-2 btn btn-outline-dark" type="submit">Submit</button>
+            </div>
 
           </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Submit</button>
+          {{!-- <button type="button" class="btn btn-primary submitBtn">Submit</button> --}}
         </div>
       </div>
     </div>

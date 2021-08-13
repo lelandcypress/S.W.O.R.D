@@ -1,1 +1,7 @@
+.modal-launch {
+    cursor: pointer;
+}
 
+.modal-launch:hover {
+    text-decoration: underline;
+}
