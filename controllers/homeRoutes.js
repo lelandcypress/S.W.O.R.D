@@ -89,6 +89,7 @@ router.get('/mission/:id', withAuth, async (req, res) => {
 router.get('/profile', withAuth, async (req, res) => {
   try {
     // Find the logged in user based on the session ID
+    let listOfAvailableMissions, missions;
     const userData = await User.findByPk(req.session.user_id, {
       attributes: { exclude: ['password'] },
       include: [
@@ -120,9 +121,32 @@ router.get('/profile', withAuth, async (req, res) => {
     });
 
     const user = userData.get({ plain: true });
-    console.log(user)
+
+    console.log(user.hero.mission);
+
+    if (!user.hero.mission) {
+      listOfAvailableMissions = await Mission.findAll({
+        attributes: {
+          include: [
+            ['id', 'mission_id'],
+            ['name', 'mission_name'],
+            'location',
+            'date_created',
+            'priority',
+            'status',
+          ],
+        },
+        order: [['date_created', 'DESC']],
+      });
+
+      missions = listOfAvailableMissions.map(x => x.get({ plain: true }));
+    }
+
+
+
     res.render('profile', {
       ...user,
+      missions,
       logged_in: true,
     });
   } catch (err) {
