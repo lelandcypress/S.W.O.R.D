@@ -1,3 +1,6 @@
+var showEditButton = document.getElementById('update-mission-btn');
+var editSubmitButton = document.getElementById('submit-update-btn');
+
 function handleUpdateStatusButton(event) {
     event.preventDefault();
 
@@ -34,10 +37,10 @@ const handleStatusSubmitButton = async (event) => {
     }
 }
 
-document
-    .getElementById('update-mission-btn')
-    .addEventListener('click', handleUpdateStatusButton);
+if (showEditButton) {
+    showEditButton.addEventListener('click', handleUpdateStatusButton);
+}
 
-document
-    .getElementById('submit-update-btn')
-    .addEventListener('click', handleStatusSubmitButton);
+if (editSubmitButton) {
+    editSubmitButton.addEventListener('click', handleStatusSubmitButton);
+}
