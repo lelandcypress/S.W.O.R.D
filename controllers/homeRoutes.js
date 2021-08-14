@@ -175,6 +175,8 @@ router.get('/login', (req, res) => {
 router.get('/create', (req, res) => {
   // If the user is already logged in, redirect the request to another route
 
-  res.render('missionCreate');
+  res.render('missionCreate',{
+    logged_in: req.session.logged_in,
+  });
 });
 module.exports = router;
