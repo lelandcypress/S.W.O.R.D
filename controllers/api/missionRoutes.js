@@ -4,11 +4,11 @@ const withAuth = require('../../utils/auth');
 
 router.post('/', async (req, res) => {
   try {
-    const newProject = await Mission.create({
+    const newMission = await Mission.create({
       ...req.body,
     });
 
-    res.status(200).json(newProject);
+    res.status(200).json(newMission);
   } catch (err) {
     res.status(400).json(err);
   }
@@ -64,6 +64,32 @@ router.put('/:id', withAuth, async (req, res) => {
     }
   } catch (err) {
     res.status(500).json(err);
+  }
+});
+router.put('/heroassign/:id', async (req, res) => {
+  // console.log(req.params);
+  // console.log(req.session);
+  try {
+    const heroName = await User.findByPk(req.session.user_id, {
+      attributes: ['hero_id'],
+    });
+    const heroNow = heroName.get({ plain: true });
+
+    console.log(heroNow);
+    const updatedMission = await Hero.update(
+      {
+        mission_id: req.params.id,
+      },
+      {
+        where: {
+          id: heroNow.hero_id,
+        },
+      }
+    );
+    res.status(200).json(updatedMission);
+  } catch (err) {
+    res.status(500).json(err);
+    console.log(err);
   }
 });
 
