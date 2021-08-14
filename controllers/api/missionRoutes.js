@@ -66,5 +66,33 @@ router.put('/:id', withAuth, async (req, res) => {
     res.status(500).json(err);
   }
 });
+router.put('/heroassign/:id', async (req, res) => {
+  // console.log(req.params);
+  // console.log(req.session);
+  try {
+    const heroName = await User.findByPk(req.session.user_id, {
+      attributes: ['hero_id'],
+    });
+    const heroNow = heroName.get({ plain: true });
+
+    console.log(heroNow);
+    const updatedMission = await Hero.update(
+      {
+        mission_id: req.params.id,
+      },
+      {
+        where: {
+          id: heroNow.hero_id,
+        },
+      }
+    );
+    // If the database is updated successfully, what happens to the updated data below?
+    // The updated data (updatedMission) is then sent back to handler that dispatched the fetch request.
+    res.status(200).json(updatedMission);
+  } catch (err) {
+    res.status(500).json(err);
+    console.log(err);
+  }
+});
 
 module.exports = router;
