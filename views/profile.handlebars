@@ -5,7 +5,7 @@
 </div>
 
 <div class="row mt-4">
-  <div class="col-md-6 mb-3">
+  <div class="col-md-6 mb-3 card shadow-card">
     <table>
       <h3>User Profile</h3>
       <tr>
@@ -20,7 +20,7 @@
       <tr>
         <td>Weakness: {{this.hero.weakness}}</td>
       </tr>
-    </table> 
+    </table>
   </div>
 
   {{#if this.hero.mission}}
@@ -35,10 +35,10 @@
       </tr>
       <tr>
         <td>Location: {{this.hero.mission.location}}</td>
-        </tr>
+      </tr>
       <tr>
         <td>Date Reported: {{format_date this.hero.mission.date_created}}</td>
-        </tr>
+      </tr>
       <tr>
         <td>Status: {{this.hero.mission.status}}</td>
         <td>
@@ -71,12 +71,12 @@
       </thead>
       <tbody>
         {{#each missions as |mission|}}
-          <tr class='table-secondary'>
-            <td>{{mission.mission_name}}</td>
-            <td>{{mission.location}}</td>
-            <td>{{mission.status}}</td>
-            <td><button class="joinMissionBtn">Join Mission</button></td>
-          </tr>
+        <tr class='table-secondary'>
+          <td>{{mission.mission_name}}</td>
+          <td>{{mission.location}}</td>
+          <td>{{mission.status}}</td>
+          <td><button class="joinMissionBtn">Join Mission</button></td>
+        </tr>
         {{/each}}
       </tbody>
     </table>
