@@ -27,13 +27,13 @@ router.get('/', async (req, res) => {
       ],
       order: [['date_created', 'DESC']],
     });
-    console.log(currentMissionData);
+    // console.log(currentMissionData);
     let missions = [];
     // Serialize data so the template can read it
     currentMissionData
       .map((x) => x.get({ plain: true }))
       .map((x) => {
-        console.log(x.heros);
+        // console.log(x.heros);
         missions.push({
           id: x.id,
           name: x.name,
@@ -47,7 +47,7 @@ router.get('/', async (req, res) => {
           heros: x.heros[0] ? x.heros[0].name : null,
         });
       });
-    console.log(missions);
+    // console.log(missions);
     res.status(200).render('homepage', {
       missions,
       logged_in: req.session.logged_in,
@@ -132,7 +132,7 @@ router.get('/profile', withAuth, async (req, res) => {
 
     const user = userData.get({ plain: true });
 
-    console.log(user.hero.mission);
+    // console.log(user.hero.mission);
 
     if (!user.hero.mission) {
       listOfAvailableMissions = await Mission.findAll({

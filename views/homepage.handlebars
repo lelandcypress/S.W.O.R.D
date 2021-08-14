@@ -4,7 +4,6 @@
       <tr>
         <th scope="col">Mission ID</th>
         <th scope="col">Mission Name</th>
-        <th scope="col">Who Submitted</th>
         <th scope="col">Submit Date</th>
         <th scope="col">Priority</th>
         <th scope="col">Status</th>
@@ -17,12 +16,14 @@
       <tr class="table-secondary">
         <th scope="row"><a href="/mission/{{mission.mission_id}}">{{mission.mission_id}}</a></th>
         <td><a href="/mission/{{mission.mission_id}}">{{mission.mission_name}}</a></td>
-        {{!-- TODO: NEED TO SOMEHOW PULL WHO SUBMITTED REQUEST --}}
-        <td><a href="/mission/{{mission.mission_id}}">Citizen</a></td>
         <td><a href="/mission/{{mission.mission_id}}">{{format_date mission.date_created}}</a></td>
         <td><a href="/mission/{{mission.mission_id}}">{{mission.priority}}</a></td>
         <td><a href="/mission/{{mission.mission_id}}">{{mission.status}}</a></td>
-        <td><a href="/mission/{{mission.mission_id}}">{{heros}}</a></td>
+      {{#if heros}}
+      <td>{{heros}}</td>
+      {{else}}
+      <td><input type=submit id='join_mission' data-id = "{{mission.mission_id}}" value='Join Mission'></td>
+      {{/if}}
       </tr>
       {{/each}}
     </tbody>
