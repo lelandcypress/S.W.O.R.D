@@ -33,7 +33,7 @@ router.get('/', async (req, res) => {
     currentMissionData
       .map((x) => x.get({ plain: true }))
       .map((x) => {
-        // console.log(x.heros);
+        console.log(x.heros);
         missions.push({
           id: x.id,
           name: x.name,
@@ -44,10 +44,19 @@ router.get('/', async (req, res) => {
           priority: x.priority,
           mission_id: x.mission_id,
           mission_name: x.mission_name,
-          heros: x.heros[0] ? x.heros[0].name : null,
+          heros: () => {
+            let data = x.heros;
+            let returnArr = [];
+            data.forEach( (x) => {
+              returnArr.push(x['name']);
+            } );
+
+            return returnArr;
+          },
         });
       });
-    // console.log(missions);
+
+    console.log(missions);
     res.status(200).render('homepage', {
       missions,
       logged_in: req.session.logged_in,

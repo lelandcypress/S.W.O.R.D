@@ -21,7 +21,11 @@
         <td><a href="/mission/{{mission.mission_id}}">{{mission.priority}}</a></td>
         <td><a href="/mission/{{mission.mission_id}}">{{mission.status}}</a></td>
       {{#if heros}}
-      <td>{{heros}}</td>
+      <td>
+        {{#each heros as |hero|}}
+          {{hero}}, 
+        {{/each}}
+        </td>
       {{else}}
       <td><input type=submit id='join_mission' data-id = "{{mission.mission_id}}" value='Join Mission'></td>
       {{/if}}

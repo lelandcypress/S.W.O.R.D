@@ -59,7 +59,7 @@
   </div>
   {{else}}
   <div class="col-md-6 mb-3">
-    <table class='table'>
+    <table class='table' id='open-missions-table'>
       <h3>Open Missions</h3>
       <thead>
         <tr>
@@ -75,7 +75,7 @@
           <td>{{mission.mission_name}}</td>
           <td>{{mission.location}}</td>
           <td>{{mission.status}}</td>
-          <td><button class="joinMissionBtn">Join Mission</button></td>
+          <td><button class="joinMissionBtn" data-id="{{mission.mission_id}}">Join Mission</button></td>
         </tr>
         {{/each}}
       </tbody>
