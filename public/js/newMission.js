@@ -1,12 +1,24 @@
-// TO BE USED WITH CREATE MISSION PAGE
+const input = document.querySelectorAll('.input');
+const create = document.querySelectorAll('#mission-create');
+create.disabled = true;
+
+const enableButton = () => {
+  if (document.querySelector('.input').value === '') {
+    create.disabled = true; //button remains disabled
+  } else {
+    create.disabled = false; //button is enabled
+  }
+};
+
+input.addEventListener('change', enableButton);
+
 const newMissionHandler = async (event) => {
   event.preventDefault();
-  console.log('button pushed');
   const name = document.querySelector('#name').value.trim();
   const location = document.querySelector('#location').value.trim();
   const description = document.querySelector('#description').value.trim();
   const priority = document.querySelector('#priority').value.trim();
-  console.log(priority);
+
   await fetch('/api/missions/', {
     method: 'POST',
     body: JSON.stringify({ name, location, description, priority }),
@@ -17,6 +29,12 @@ const newMissionHandler = async (event) => {
   });
 };
 
+const returnToHome = async (event) => {
+  event.preventDefault();
+  window.location.replace('/');
+};
 document
   .querySelector('.new-mission-form')
   .addEventListener('submit', newMissionHandler);
+
+document.querySelector('#homepage').addEventListener('click', returnToHome);

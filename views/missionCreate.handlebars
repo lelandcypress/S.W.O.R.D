@@ -1,28 +1,61 @@
-<h1>Need Assistance?</h1>
+<div>
+<div id = "create-mission">
+    <h1>Need Assistance?</h1>
 
 <form class='new-mission-form'>
     <br>
     <label for="name">Mission Name</label>
 
-    <input type='text' id='name' name='name'>
+    <input class ='input'type='text' id='name' name='name' required>
     <br>
     <label for="location">Where is the mission?</label>
 
-    <input type='text' id="location" name="location">
+    <input class ='input' type='text' id="location" name="location" required>
     <br>
     <label for="description">Describe the mission</label>
 
-    <input type='text' id="description" name="description">
+    <input class ='input' type='text' id="description" name="description" required >
     <br>
     <label for="priority">Priority</label>
 
     <select name='priority' id='priority'>
-        <option value='Routine'>Routine</option>
-        <option value='Urgent'>Urgent</option>
+        <option value='Low'>Low</option>
+        <option value='Medium'>Medium</option>
+        <option value='High'>High</option>
         <option value='Critical'>Critical</option>
     </select>
     <br>
-    <input type=submit id='mission-create' value='Request Help'>
+    
+    <button type= 'submit' id='mission-create' class="modal-launch" data-bs-toggle="modal" data-bs-target="#exampleModal">Request Help</button>
+
+<p id ="alert"><p>
 </form>
+
+
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Misson Submitted</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>One of our heros will review your request and respond as soon as possible</p>
+                <br>
+                <p>Return to homepage to see any updates</p>
+               
+            </div> 
+            <div class="modal-footer">
+                
+                <p id="homepage" class="btn btn-secondary">Return</p>
+                {{!-- <button type="button" class="btn btn-primary submitBtn">Submit</button> --}}
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
 
 <script src="/js/newMission.js"></script>

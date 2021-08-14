@@ -21,6 +21,7 @@ Mission.init(
     },
     description: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
     priority: {
       type: DataTypes.STRING,
