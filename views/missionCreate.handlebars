@@ -1,28 +1,38 @@
-<h1>Need Assistance?</h1>
+<h1 class="text-center">Need Assistance?</h1>
+<div class="form-parent">
+    <div class="d-flex form-container justify-content-center">
+        <form class='new-mission-form card p-3 shadow-card'>
 
-<form class='new-mission-form'>
-    <br>
-    <label for="name">Mission Name</label>
+            <div class="form-group">
+                <label for="name">Mission Name</label>
+                <input class="inputs" type='text' id='name' name='name'>
+            </div>
 
-    <input type='text' id='name' name='name'>
-    <br>
-    <label for="location">Where is the mission?</label>
+            <div class="form-group">
+                <label for="location">Where is the mission?</label>
+                <input class="inputs" type='text' id="location" name="location">
+            </div>
 
-    <input type='text' id="location" name="location">
-    <br>
-    <label for="description">Describe the mission</label>
+            <div class="form-group">
+                <label for="description">Describe the mission</label>
+                <textarea class="inputs" type='text' id="description" name="description"></textarea>
+            </div>
 
-    <input type='text' id="description" name="description">
-    <br>
-    <label for="priority">Priority</label>
+            <div class="form-group mb-2">
+                <label for="priority">Priority</label>
+                <select class="inputs" name='priority' id='priority'>
+                    <option value='Routine'>Routine</option>
+                    <option value='Urgent'>Urgent</option>
+                    <option value='Critical'>Critical</option>
+                </select>
+            </div>
 
-    <select name='priority' id='priority'>
-        <option value='Routine'>Routine</option>
-        <option value='Urgent'>Urgent</option>
-        <option value='Critical'>Critical</option>
-    </select>
-    <br>
-    <input type=submit id='mission-create' value='Request Help'>
-</form>
+            <div class="form-group">
+                <button type="submit" class="btn" id='mission-create' value='Request Help'>Submit</button>
+            </div>
+
+        </form>
+    </div>
+</div>
 
 <script src="/js/newMission.js"></script>
