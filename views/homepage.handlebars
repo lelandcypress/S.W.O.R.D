@@ -11,7 +11,7 @@
         <th scope="col">Hero Assigned</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody id="missionTable">
       <!-- Loop over each object in the mission array -->
       {{#each missions as |mission| }}
       <tr class="table-secondary">
@@ -31,3 +31,5 @@
   </table>
 </div>
 <a href="/create"><button class="btn">Create Mission</button></a>
+
+  <script src="./js/homepage.js"></script>
