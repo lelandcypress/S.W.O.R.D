@@ -6,7 +6,7 @@ const newMissionHandler = async (event) => {
   const location = document.querySelector('#location').value.trim();
   const description = document.querySelector('#description').value.trim();
   const priority = document.querySelector('#priority').value.trim();
-
+  console.log(priority);
   await fetch('/api/missions/', {
     method: 'POST',
     body: JSON.stringify({ name, location, description, priority }),
