@@ -16,9 +16,9 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', withAuth, async (req, res) => {
   try {
-    // This might be busted
-    const canUpdate = async () => {
-      const heroMissionID = await User.findByPk(req.session.user_id, {
+    // Check if the user can update
+    const canUpdate = async (user, id) => {
+      const heroMissionID = await User.findByPk(user, {
         include: [
           {
             model: Hero,
@@ -28,35 +28,40 @@ router.put('/:id', withAuth, async (req, res) => {
       });
 
       const heroesCurrentMission = heroMissionID.get({ plain: true });
+      mID = heroesCurrentMission['hero'].mission_id;
 
-      mID = heroesCurrentMission['mission_id'];
-
-      if (mID == req.params.id) return true;
+      if (mID == id) {
+        return true;
+      };
       return false;
     };
 
-    if (!canUpdate) {
+    const iCanUpdate = await canUpdate(req.session.user_id, req.params.id);
+
+    if (!iCanUpdate) {
       res.status(403);
       return;
-    }
-
-    const missionData = await Mission.update(
-      {
-        status: req.body.status,
-      },
-      {
-        where: {
-          id: req.params.id,
+    } else {
+      const missionData = await Mission.update(
+        {
+          status: req.body.body,
         },
+        {
+          where: {
+            id: req.params.id,
+          },
+        }
+      );
+
+      console.log(missionData);
+
+      if (!missionData) {
+        res.status(404).json({ message: 'No mission found with this id!' });
+        return;
       }
-    );
 
-    if (!missionData) {
-      res.status(404).json({ message: 'No mission found with this id!' });
-      return;
+      res.status(200).json(missionData);
     }
-
-    res.status(200).json(missionData);
   } catch (err) {
     res.status(500).json(err);
   }

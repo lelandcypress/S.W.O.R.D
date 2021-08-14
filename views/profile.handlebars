@@ -41,8 +41,21 @@
         </tr>
       <tr>
         <td>Status: {{this.hero.mission.status}}</td>
+        <td>
+          <button id='update-mission-btn'>Update Status</button>
+        </td>
       </tr>
     </table>
+    {{!-- FORM --}}
+    <form class='form update-form'>
+      <h4>What is this mission's status?</h4>
+      <div class="form-group">
+        <input type='text' id='update-status-body' name='update-status-body' data-id="{{this.hero.mission.mission_id}}">
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary" id="submit-update-btn" >Update This Mission</button>
+      </div>
+    </form>
   </div>
   {{else}}
   <div class="col-md-6 mb-3">
