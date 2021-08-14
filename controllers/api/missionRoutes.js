@@ -1,12 +1,11 @@
 const router = require('express').Router();
-const { Mission, Hero, User} = require('../../models');
+const { Mission, Hero, User } = require('../../models');
 const withAuth = require('../../utils/auth');
 
-router.post('/', withAuth, async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const newProject = await Mission.create({
       ...req.body,
-      user_id: req.session.user_id,
     });
 
     res.status(200).json(newProject);
@@ -17,19 +16,18 @@ router.post('/', withAuth, async (req, res) => {
 
 router.put('/:id', withAuth, async (req, res) => {
   try {
-
     // This might be busted
     const canUpdate = async () => {
-      const heroMissionID = await User.findByPk(
-      req.session.user_id,
-      {
-        include: [{
-          model: Hero,
-          attributes: ['mission_id']
-        }]
+      const heroMissionID = await User.findByPk(req.session.user_id, {
+        include: [
+          {
+            model: Hero,
+            attributes: ['mission_id'],
+          },
+        ],
       });
 
-      const heroesCurrentMission = heroMissionID.get({ plain:true })
+      const heroesCurrentMission = heroMissionID.get({ plain: true });
 
       mID = heroesCurrentMission['mission_id'];
 
@@ -43,14 +41,15 @@ router.put('/:id', withAuth, async (req, res) => {
     }
 
     const missionData = await Mission.update(
-    {
-      status: req.body.status,
-    },
-    {
-      where: {
-        id: req.params.id,
+      {
+        status: req.body.status,
       },
-    });
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    );
 
     if (!missionData) {
       res.status(404).json({ message: 'No mission found with this id!' });

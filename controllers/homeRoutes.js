@@ -20,36 +20,37 @@ router.get('/', async (req, res) => {
         {
           model: Hero,
           attributes: ['name'],
-          raw:true,
+          required: false,
+          raw: true,
           nest: true,
         },
       ],
       order: [['date_created', 'DESC']],
     });
+    console.log(currentMissionData);
     let missions = [];
     // Serialize data so the template can read it
-    currentMissionData.map((x) => x.get({ plain: true })).map((x) =>{ 
-      console.log(x.heros[0].name);
-      missions.push(
-      {
-        id: x.id,
-        name: x.name,
-        location: x.location,
-        description: x.description,
-        status: x.status,
-        date_created: x.date_created,
-        priority: x.priority,
-        mission_id: x.mission_id,
-        mission_name: x.mission_name,
-        heros: x.heros[0].name,
-
-      }
-
-    )});
+    currentMissionData
+      .map((x) => x.get({ plain: true }))
+      .map((x) => {
+        console.log(x.heros);
+        missions.push({
+          id: x.id,
+          name: x.name,
+          location: x.location,
+          description: x.description,
+          status: x.status,
+          date_created: x.date_created,
+          priority: x.priority,
+          mission_id: x.mission_id,
+          mission_name: x.mission_name,
+          heros: x.heros[0] ? x.heros[0].name : null,
+        });
+      });
     console.log(missions);
     res.status(200).render('homepage', {
       missions,
-      logged_in: req.session.logged_in
+      logged_in: req.session.logged_in,
     });
   } catch (err) {
     res.status(500).json(err);
@@ -80,11 +81,14 @@ router.get('/mission/:id', withAuth, async (req, res) => {
     });
 
     // Serialize data so the template can read it
-    const mission = selectedMissionData.get({ plain: true });
+    let mission = selectedMissionData.get({ plain: true });
+    const heroname = mission.heros[0].name;
+    mission.hero = heroname;
+
 
     res.status(200).render('mission', {
       ...mission,
-      logged_in: req.session.logged_in
+      logged_in: req.session.logged_in,
     });
   } catch (err) {
     res.status(500).json(err);
@@ -145,10 +149,8 @@ router.get('/profile', withAuth, async (req, res) => {
         order: [['date_created', 'DESC']],
       });
 
-      missions = listOfAvailableMissions.map(x => x.get({ plain: true }));
+      missions = listOfAvailableMissions.map((x) => x.get({ plain: true }));
     }
-
-
 
     res.render('profile', {
       ...user,
@@ -170,4 +172,9 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
+router.get('/create', (req, res) => {
+  // If the user is already logged in, redirect the request to another route
+
+  res.render('missionCreate');
+});
 module.exports = router;

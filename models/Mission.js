@@ -29,6 +29,7 @@ Mission.init(
     status: {
       type: DataTypes.STRING,
       allowNull: false,
+      defaultValue: 'Active',
     },
     date_created: {
       type: DataTypes.DATE,
