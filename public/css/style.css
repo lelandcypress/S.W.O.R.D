@@ -16,7 +16,7 @@
     cursor: pointer;
 }
 
-.modal-launch:hover {
+.modal-launch {
     text-decoration: underline;
 }
 
@@ -106,4 +106,8 @@ th {
     display: inline-block;
     vertical-align: middle;
     width: 90%;
+}
+
+.shadow-card {
+    box-shadow: rgba(240, 143, 46, 0.4) -5px 5px, rgba(240, 140, 46, 0.3) -10px 10px, rgba(240, 135, 46, 0.2) -15px 15px, rgba(240, 130, 46, 0.1) -20px 20px, rgba(240, 120, 46, 0.05) -25px 25px;
 }

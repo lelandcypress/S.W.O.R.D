@@ -1,29 +1,31 @@
-<table class="table table-container" id="missionTable">
-  <thead>
-    <tr>
-      <th scope="col">Mission ID</th>
-      <th scope="col">Mission Name</th>
-      <th scope="col">Who Submitted</th>
-      <th scope="col">Submit Date</th>
-      <th scope="col">Priority</th>
-      <th scope="col">Status</th>
-      <th scope="col">Hero Assigned</th>
-    </tr>
-  </thead>
-  <tbody>
-    <!-- Loop over each object in the mission array -->
-    {{#each missions as |mission| }}
-    <tr class="table-secondary">
-      <th scope="row"><a href="/mission/{{mission.mission_id}}">{{mission.mission_id}}</a></th>
-      <td><a href="/mission/{{mission.mission_id}}">{{mission.mission_name}}</a></td>
-      {{!-- TODO: NEED TO SOMEHOW PULL WHO SUBMITTED REQUEST --}}
-      <td><a href="/mission/{{mission.mission_id}}">Citizen</a></td>
-      <td><a href="/mission/{{mission.mission_id}}">{{format_date mission.date_created}}</a></td>
-      <td><a href="/mission/{{mission.mission_id}}">{{mission.priority}}</a></td>
-      <td><a href="/mission/{{mission.mission_id}}">{{mission.status}}</a></td>
-      <td><a href="/mission/{{mission.mission_id}}">{{heros}}</a></td>
-    </tr>
-    {{/each}}
-  </tbody>
-</table>
+<div class="shadow-card mb-5">
+  <table class="table table-container" id="missionTable">
+    <thead>
+      <tr>
+        <th scope="col">Mission ID</th>
+        <th scope="col">Mission Name</th>
+        <th scope="col">Who Submitted</th>
+        <th scope="col">Submit Date</th>
+        <th scope="col">Priority</th>
+        <th scope="col">Status</th>
+        <th scope="col">Hero Assigned</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Loop over each object in the mission array -->
+      {{#each missions as |mission| }}
+      <tr class="table-secondary">
+        <th scope="row"><a href="/mission/{{mission.mission_id}}">{{mission.mission_id}}</a></th>
+        <td><a href="/mission/{{mission.mission_id}}">{{mission.mission_name}}</a></td>
+        {{!-- TODO: NEED TO SOMEHOW PULL WHO SUBMITTED REQUEST --}}
+        <td><a href="/mission/{{mission.mission_id}}">Citizen</a></td>
+        <td><a href="/mission/{{mission.mission_id}}">{{format_date mission.date_created}}</a></td>
+        <td><a href="/mission/{{mission.mission_id}}">{{mission.priority}}</a></td>
+        <td><a href="/mission/{{mission.mission_id}}">{{mission.status}}</a></td>
+        <td><a href="/mission/{{mission.mission_id}}">{{heros}}</a></td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
 <a href="/create"><button class="btn">Create Mission</button></a>
