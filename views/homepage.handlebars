@@ -1,9 +1,4 @@
-
-
-<a href ="/create">Create Mission</a>
-
-
-<table class="table" id="missionTable">
+<table class="table table-container" id="missionTable">
   <thead>
     <tr>
       <th scope="col">Mission ID</th>
@@ -15,10 +10,10 @@
       <th scope="col">Hero Assigned</th>
     </tr>
   </thead>
-    <tbody>
+  <tbody>
     <!-- Loop over each object in the mission array -->
-{{#each missions as |mission| }}
-<tr class="table-secondary">
+    {{#each missions as |mission| }}
+    <tr class="table-secondary">
       <th scope="row"><a href="/mission/{{mission.mission_id}}">{{mission.mission_id}}</a></th>
       <td><a href="/mission/{{mission.mission_id}}">{{mission.mission_name}}</a></td>
       {{!-- TODO: NEED TO SOMEHOW PULL WHO SUBMITTED REQUEST --}}
@@ -27,8 +22,8 @@
       <td><a href="/mission/{{mission.mission_id}}">{{mission.priority}}</a></td>
       <td><a href="/mission/{{mission.mission_id}}">{{mission.status}}</a></td>
       <td><a href="/mission/{{mission.mission_id}}">{{heros}}</a></td>
-
-</tr>
-{{/each}}
+    </tr>
+    {{/each}}
   </tbody>
 </table>
+<a href="/create"><button class="btn">Create Mission</button></a>
