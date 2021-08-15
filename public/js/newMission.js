@@ -1,17 +1,3 @@
-const input = document.querySelectorAll('.input');
-const create = document.querySelectorAll('#mission-create');
-create.disabled = true;
-
-const enableButton = () => {
-  if (document.querySelector('.input').value === '') {
-    create.disabled = true; //button remains disabled
-  } else {
-    create.disabled = false; //button is enabled
-  }
-};
-
-input.addEventListener('change', enableButton);
-
 const newMissionHandler = async (event) => {
   event.preventDefault();
   const name = document.querySelector('#name').value.trim();
