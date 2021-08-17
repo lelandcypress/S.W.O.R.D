@@ -9,7 +9,7 @@
     font-family: 'Karla', sans-serif;
 }
 
-.update-form {
+#update-form {
     display: none;
 }
 
@@ -40,7 +40,7 @@
 }
 
 .modal-launch {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .modal-launch {
@@ -138,6 +138,7 @@ th {
 .shadow-card {
     box-shadow: rgba(240, 143, 46, 0.4) -5px 5px, rgba(240, 140, 46, 0.3) -10px 10px, rgba(240, 135, 46, 0.2) -15px 15px, rgba(240, 130, 46, 0.1) -20px 20px, rgba(240, 120, 46, 0.05) -25px 25px;
 }
+
 
 .open-card {
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;

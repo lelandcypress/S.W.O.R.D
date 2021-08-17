@@ -4,11 +4,11 @@ const withAuth = require('../../utils/auth');
 
 router.post('/', async (req, res) => {
   try {
-    const newProject = await Mission.create({
+    const newMission = await Mission.create({
       ...req.body,
     });
 
-    res.status(200).json(newProject);
+    res.status(200).json(newMission);
   } catch (err) {
     res.status(400).json(err);
   }
@@ -16,9 +16,9 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', withAuth, async (req, res) => {
   try {
-    // This might be busted
-    const canUpdate = async () => {
-      const heroMissionID = await User.findByPk(req.session.user_id, {
+    // Check if the user can update
+    const canUpdate = async (user, id) => {
+      const heroMissionID = await User.findByPk(user, {
         include: [
           {
             model: Hero,
@@ -28,37 +28,68 @@ router.put('/:id', withAuth, async (req, res) => {
       });
 
       const heroesCurrentMission = heroMissionID.get({ plain: true });
+      mID = heroesCurrentMission['hero'].mission_id;
 
-      mID = heroesCurrentMission['mission_id'];
-
-      if (mID == req.params.id) return true;
+      if (mID == id) {
+        return true;
+      };
       return false;
     };
 
-    if (!canUpdate) {
+    const iCanUpdate = await canUpdate(req.session.user_id, req.params.id);
+
+    if (!iCanUpdate) {
       res.status(403);
       return;
-    }
+    } else {
+      const missionData = await Mission.update(
+        {
+          status: req.body.body,
+        },
+        {
+          where: {
+            id: req.params.id,
+          },
+        }
+      );
 
-    const missionData = await Mission.update(
+      console.log(missionData);
+
+      if (!missionData) {
+        res.status(404).json({ message: 'No mission found with this id!' });
+        return;
+      }
+
+      res.status(200).json(missionData);
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+router.put('/heroassign/:id', async (req, res) => {
+  // console.log(req.params);
+  // console.log(req.session);
+  try {
+    const heroName = await User.findByPk(req.session.user_id, {
+      attributes: ['hero_id'],
+    });
+    const heroNow = heroName.get({ plain: true });
+
+    console.log(heroNow);
+    const updatedMission = await Hero.update(
       {
-        status: req.body.status,
+        mission_id: req.params.id,
       },
       {
         where: {
-          id: req.params.id,
+          id: heroNow.hero_id,
         },
       }
     );
-
-    if (!missionData) {
-      res.status(404).json({ message: 'No mission found with this id!' });
-      return;
-    }
-
-    res.status(200).json(missionData);
+    res.status(200).json(updatedMission);
   } catch (err) {
     res.status(500).json(err);
+    console.log(err);
   }
 });
 
