@@ -1,7 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Karla:wght@400;700&display=swap');
+
+/* * {
+    font-family: 'Lato', sans-serif;
+} */
 
 * {
-    font-family: 'Lato', sans-serif;
+    font-family: 'Karla', sans-serif;
 }
 
 #update-form {
@@ -137,4 +142,12 @@ th {
 
 .open-card {
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.mission-table {
+    box-shadow: rgba(207, 133, 23, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(26, 24, 17, 0.1) 0px 24px 80px;
+}
+
+.login-card {
+    box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
 }

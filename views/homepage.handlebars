@@ -20,15 +20,15 @@
         <td><a href="/mission/{{mission.mission_id}}">{{format_date mission.date_created}}</a></td>
         <td><a href="/mission/{{mission.mission_id}}">{{mission.priority}}</a></td>
         <td><a href="/mission/{{mission.mission_id}}">{{mission.status}}</a></td>
-      {{#if heros}}
-      <td>
-        {{#each heros as |hero|}}
-          {{hero}}, 
-        {{/each}}
+        {{#if heros}}
+        <td>
+          {{#each heros as |hero|}}
+          {{hero}},
+          {{/each}}
         </td>
-      {{else}}
-      <td><input type=submit id='join_mission' data-id = "{{mission.mission_id}}" value='Join Mission'></td>
-      {{/if}}
+        {{else}}
+        <td><input type=submit id='join_mission' data-id="{{mission.mission_id}}" value='Join Mission'></td>
+        {{/if}}
       </tr>
       {{/each}}
     </tbody>
@@ -36,4 +36,4 @@
 </div>
 <a href="/create"><button class="btn">Create Mission</button></a>
 
-  <script src="./js/homepage.js"></script>
+<script src="./js/homepage.js"></script>
