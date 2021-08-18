@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const { Mission, Hero, User } = require('../models');
 const withAuth = require('../utils/auth');
-
-router.get('/', async (req, res) => {
+var res = [];
+router.get('/', async (req, join) => {
   try {
     // Get all missions and JOIN with user data
     const currentMissionData = await Mission.findAll({
@@ -79,30 +79,40 @@ router.get('/', async (req, res) => {
       });
 
       const user = userData.get({ plain:true });
-
-      if (user.hero.mission_id) return false;
-      return true;
+      console.log("line 82 " + user.hero.mission_id);
+      const heromisID = user.hero.mission_id;
+      console.log("Line 84 " +heromisID);
+      if (heromisID){
+        res.push({onMission: true});
+      } else{
+        res.push({onMission: false});
+      };
+      console.log("Line 90 " + res)
     }
+    
 
-    const renderPage = async (join) => {
-      res.status(200).render('homepage', {
+    const renderPage = async (res) => {
+      console.log("line 94 " + res);
+      join.status(200).render('homepage', {
         missions,
         logged_in: req.session.logged_in,
-        canJoinNewMission: join
+        canJoinNewMission: res.onMission
       });
     }
-
-    if (!canJoin(req.session.user_id)) {
-      renderPage(false);
-    } else {
-      renderPage(true);
-    }
+    canJoin(req.session.user_id);
+    renderPage(res);
+    
+    // if (canJoin(req.session.user_id)) {
+    //   renderPage(false);
+    // } else {
+    //   renderPage(true);
+    // }
   } catch (err) {
-    res.status(500).json(err);
+    join.status(500).json(err);
   }
 });
 
-router.get('/mission/:id', withAuth, async (req, res) => {
+router.get('/mission/:id', withAuth, async (req, join) => {
   try {
     // Get specific mission
     const selectedMissionData = await Mission.findByPk(req.params.id, {
@@ -131,17 +141,17 @@ router.get('/mission/:id', withAuth, async (req, res) => {
     mission.hero = heroname;
 
 
-    res.status(200).render('mission', {
+    join.status(200).render('mission', {
       ...mission,
       logged_in: req.session.logged_in,
     });
   } catch (err) {
-    res.status(500).json(err);
+    join.status(500).json(err);
   }
 });
 
 // Use withAuth middleware to prevent access to route
-router.get('/profile', withAuth, async (req, res) => {
+router.get('/profile', withAuth, async (req, join) => {
   try {
     // Find the logged in user based on the session ID
     let listOfAvailableMissions, missions;
@@ -197,30 +207,30 @@ router.get('/profile', withAuth, async (req, res) => {
       missions = listOfAvailableMissions.map((x) => x.get({ plain: true }));
     }
 
-    res.render('profile', {
+    join.render('profile', {
       ...user,
       missions,
       logged_in: true,
     });
   } catch (err) {
-    res.status(500).json(err);
+    join.status(500).json(err);
   }
 });
 
-router.get('/login', (req, res) => {
+router.get('/login', (req, join) => {
   // If the user is already logged in, redirect the request to another route
   if (req.session.logged_in) {
-    res.redirect('/profile');
+    join.redirect('/profile');
     return;
   }
 
-  res.render('login');
+  join.render('login');
 });
 
-router.get('/create', (req, res) => {
+router.get('/create', (req, join) => {
   // If the user is already logged in, redirect the request to another route
 
-  res.render('missionCreate',{
+  join.render('missionCreate',{
     logged_in: req.session.logged_in,
   });
 });
