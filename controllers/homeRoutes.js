@@ -57,6 +57,9 @@ router.get('/', async (req, res) => {
       });
 
     const canJoin = async (user_id) => {
+
+      if (!user_id) return false;
+
       const userData = await User.findByPk(user_id, {
         attributes: { exclude: [
           'password',
