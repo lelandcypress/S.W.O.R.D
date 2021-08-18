@@ -15,6 +15,10 @@
     font-kerning: 4px;
 }
 
+.form-input {
+    width: 300px;
+}
+
 #update-form {
     display: none;
 }
@@ -48,6 +52,11 @@
 .modal-launch {
     cursor: pointer;
     text-decoration: none;
+}
+
+.sign-modal-launch {
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 .btn_animate {
@@ -155,7 +164,7 @@ th {
     box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
 }
 
-.hero-mission-card {
+.shadow-card-right {
     box-shadow: rgba(240, 143, 46, 0.4) 5px 5px, rgba(240, 140, 46, 0.3) 10px 10px, rgba(240, 135, 46, 0.2) 15px 15px, rgba(240, 130, 46, 0.1) 20px 20px, rgba(240, 120, 46, 0.05) 25px 25px;
 }
 

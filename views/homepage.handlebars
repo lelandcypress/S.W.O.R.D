@@ -11,10 +11,10 @@
         <th scope="col">Hero Assigned</th>
       </tr>
     </thead>
-    <tbody id="missionTable">
+    <tbody id="missionTable" class="table-striped">
       <!-- Loop over each object in the mission array -->
       {{#each missions as |mission| }}
-      <tr class="table-secondary">
+      <tr class="table-light">
         <th scope="row"><a href="/mission/{{mission.mission_id}}">{{mission.mission_id}}</a></th>
         <td><a href="/mission/{{mission.mission_id}}">{{mission.mission_name}}</a></td>
         <td><a href="/mission/{{mission.mission_id}}">{{format_date mission.date_created}}</a></td>
