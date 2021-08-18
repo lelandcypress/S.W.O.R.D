@@ -20,12 +20,14 @@
         <td><a href="/mission/{{mission.mission_id}}">{{format_date mission.date_created}}</a></td>
         <td><a href="/mission/{{mission.mission_id}}">{{mission.priority}}</a></td>
         <td><a href="/mission/{{mission.mission_id}}">{{mission.status}}</a></td>
-        {{#if heros}}
         <td>
           {{#each heros as |hero|}}
-          {{hero}},
+          {{hero}}&nbsp;
           {{/each}}
         </td>
+       {{log ../canJoinNewMission}}
+       {{#if ../canJoinNewMission}}
+        <td></td>
         {{else}}
         <td><input type="submit" class='join_mission' data-id="{{mission.mission_id}}" value='Join Mission'></td>
         {{/if}}
