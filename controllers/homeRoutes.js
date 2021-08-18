@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { Mission, Hero, User } = require('../models');
+const { findAll } = require('../models/Hero');
 const withAuth = require('../utils/auth');
 
 router.get('/', async (req, res) => {
@@ -47,9 +48,9 @@ router.get('/', async (req, res) => {
           heros: () => {
             let data = x.heros;
             let returnArr = [];
-            data.forEach( (x) => {
+            data.forEach((x) => {
               returnArr.push(x['name']);
-            } );
+            });
 
             return returnArr;
           },
@@ -57,40 +58,31 @@ router.get('/', async (req, res) => {
       });
 
     const canJoin = async (user_id) => {
-
       if (!user_id) return false;
 
       const userData = await User.findByPk(user_id, {
-        attributes: { exclude: [
-          'password',
-          'id',
-          'username',
-          'email'
-          ]
-        },
+        attributes: { exclude: ['password', 'id', 'username', 'email'] },
         include: [
           {
             model: Hero,
-            attributes: [
-              'mission_id',
-            ],
+            attributes: ['mission_id'],
           },
         ],
       });
 
-      const user = userData.get({ plain:true });
+      const user = userData.get({ plain: true });
 
       if (user.hero.mission_id) return false;
       return true;
-    }
+    };
 
     const renderPage = async (join) => {
       res.status(200).render('homepage', {
         missions,
         logged_in: req.session.logged_in,
-        canJoinNewMission: join
+        canJoinNewMission: join,
       });
-    }
+    };
 
     if (!canJoin(req.session.user_id)) {
       renderPage(false);
@@ -129,7 +121,6 @@ router.get('/mission/:id', withAuth, async (req, res) => {
     let mission = selectedMissionData.get({ plain: true });
     const heroname = mission.heros[0].name;
     mission.hero = heroname;
-
 
     res.status(200).render('mission', {
       ...mission,
@@ -220,8 +211,34 @@ router.get('/login', (req, res) => {
 router.get('/create', (req, res) => {
   // If the user is already logged in, redirect the request to another route
 
-  res.render('missionCreate',{
+  res.render('missionCreate', {
     logged_in: req.session.logged_in,
   });
 });
+
+router.get('/roster', withAuth, async (req, res) => {
+  try {
+    const heroRoster = await Hero.findAll({
+      attributes: {
+        include: [
+          'name',
+          'secret_identity',
+          'organization',
+          'powers',
+          'weakness',
+        ],
+      },
+      order: [['organization', 'DESC']],
+    });
+    let heroList = heroRoster.map((x) => x.get({ plain: true }));
+    console.log(heroList);
+    res.render('roster', {
+      heroList,
+      logged_in: true,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;
