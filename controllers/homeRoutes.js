@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { Mission, Hero, User } = require('../models');
+const { findAll } = require('../models/Hero');
 const withAuth = require('../utils/auth');
 
 
@@ -61,9 +62,9 @@ router.get(['/', '/:id([0-9]{1,})'], async (req, res) => {
           heros: () => {
             let data = x.heros;
             let returnArr = [];
-            data.forEach( (x) => {
+            data.forEach((x) => {
               returnArr.push(x['name']);
-            } );
+            });
 
             return returnArr;
           },
@@ -71,26 +72,18 @@ router.get(['/', '/:id([0-9]{1,})'], async (req, res) => {
       });
 
     const canJoin = async (user_id) => {
-
       if (!user_id) return false;
 
       const userData = await User.findByPk(user_id, {
-        attributes: { exclude: [
-          'password',
-          'id',
-          'username',
-          'email'
-          ]
-        },
+        attributes: { exclude: ['password', 'id', 'username', 'email'] },
         include: [
           {
             model: Hero,
-            attributes: [
-              'mission_id',
-            ],
+            attributes: ['mission_id'],
           },
         ],
       });
+
 
       const user = userData.get({ plain:true });
       console.log("line 82 " + user.hero.mission_id);
@@ -144,6 +137,7 @@ router.get(['/', '/:id([0-9]{1,})'], async (req, res) => {
       res.status(200).render('homepage', {
         missions,
         logged_in: req.session.logged_in,
+
         canJoinNewMission: join,
         pageLinks
       });
@@ -174,11 +168,13 @@ router.get(['/', '/:id([0-9]{1,})'], async (req, res) => {
 //     canJoin(req.session.user_id);
 //     renderPage(res);
     
+
 //     // if (canJoin(req.session.user_id)) {
 //     //   renderPage(false);
 //     // } else {
 //     //   renderPage(true);
 //     // }
+
   } catch (err) {
     join.status(500).json(err);
   }
@@ -211,6 +207,7 @@ router.get('/mission/:id', withAuth, async (req, join) => {
     let mission = selectedMissionData.get({ plain: true });
     const heroname = mission.heros[0].name;
     mission.hero = heroname;
+
 
 
     join.status(200).render('mission', {
@@ -302,8 +299,35 @@ router.get('/login', (req, join) => {
 router.get('/create', (req, join) => {
   // If the user is already logged in, redirect the request to another route
 
+
   join.render('missionCreate',{
     logged_in: req.session.logged_in,
   });
 });
+
+router.get('/roster', withAuth, async (req, res) => {
+  try {
+    const heroRoster = await Hero.findAll({
+      attributes: {
+        include: [
+          'name',
+          'secret_identity',
+          'organization',
+          'powers',
+          'weakness',
+        ],
+      },
+      order: [['organization', 'DESC']],
+    });
+    let heroList = heroRoster.map((x) => x.get({ plain: true }));
+    console.log(heroList);
+    res.render('roster', {
+      heroList,
+      logged_in: true,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;

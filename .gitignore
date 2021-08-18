@@ -1,4 +1,7 @@
 node_modules
 .env
 .DS_Store
+seed.sql
+schema.sql
 missions.csv
+
