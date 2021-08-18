@@ -1,9 +1,10 @@
 const router = require('express').Router();
-const { Mission, Hero, User } = require('../models');
-const { findAll } = require('../models/Hero');
-const withAuth = require('../utils/auth');
-var res = [];
-router.get('/', async (req, join) => {
+const Json2csvParser = require("json2csv").Parser;
+const fs = require("fs");
+const { Mission, Hero, User } = require('../../models');
+const withAuth = require('../../utils/auth');
+
+router.get('/missions', async (req, res) => {
   try {
     // Get all missions and JOIN with user data
     const currentMissionData = await Mission.findAll({
@@ -48,66 +49,34 @@ router.get('/', async (req, join) => {
           heros: () => {
             let data = x.heros;
             let returnArr = [];
-            data.forEach((x) => {
+            data.forEach( (x) => {
               returnArr.push(x['name']);
-            });
+            } );
 
             return returnArr;
           },
         });
       });
 
-    const canJoin = async (user_id) => {
-      if (!user_id) return false;
+      const json2csvParser = new Json2csvParser({ header: true});
+      const csvData = json2csvParser.parse(missions);
+      
+    //   fs.writeFile("missions.csv", csv, function(error) {
+    //     if (error) throw error;
+    //     console.log("Write to missions.csv successfully!");
+    //   });
+    res.setHeader("Content-Type", "text/csv");
+    res.setHeader("Content-Disposition", "attachment; filename=missions.csv");
 
-      const userData = await User.findByPk(user_id, {
-        attributes: { exclude: ['password', 'id', 'username', 'email'] },
-        include: [
-          {
-            model: Hero,
-            attributes: ['mission_id'],
-          },
-        ],
-      });
+    res.status(200).end(csvData);
 
-
-      const user = userData.get({ plain:true });
-      console.log("line 82 " + user.hero.mission_id);
-      const heromisID = user.hero.mission_id;
-      console.log("Line 84 " +heromisID);
-      if (heromisID){
-        res.push({onMission: true});
-      } else{
-        res.push({onMission: false});
-      };
-      console.log("Line 90 " + res)
-    }
-    
-
-    const renderPage = async (res) => {
-      console.log("line 94 " + res);
-      join.status(200).render('homepage', {
-        missions,
-        logged_in: req.session.logged_in,
-
-        canJoinNewMission: res.onMission
-      });
-    }
-    canJoin(req.session.user_id);
-    renderPage(res);
-    
-    // if (canJoin(req.session.user_id)) {
-    //   renderPage(false);
-    // } else {
-    //   renderPage(true);
-    // }
 
   } catch (err) {
-    join.status(500).json(err);
+    res.status(500).json(err);
   }
 });
 
-router.get('/mission/:id', withAuth, async (req, join) => {
+router.get('/mission/:id', withAuth, async (req, res) => {
   try {
     // Get specific mission
     const selectedMissionData = await Mission.findByPk(req.params.id, {
@@ -135,19 +104,26 @@ router.get('/mission/:id', withAuth, async (req, join) => {
     const heroname = mission.heros[0].name;
     mission.hero = heroname;
 
+    const json2csvParser = new Json2csvParser({ header: true});
+      const csvData = json2csvParser.parse(mission);
+      
+    //   fs.writeFile("missions.csv", csv, function(error) {
+    //     if (error) throw error;
+    //     console.log("Write to missions.csv successfully!");
+    //   });
+    res.setHeader("Content-Type", "text/csv");
+    res.setHeader("Content-Disposition", "attachment; filename=missions.csv");
 
+    res.status(200).end(csvData);
 
-    join.status(200).render('mission', {
-      ...mission,
-      logged_in: req.session.logged_in,
-    });
+    
   } catch (err) {
-    join.status(500).json(err);
+    res.status(500).json(err);
   }
 });
 
 // Use withAuth middleware to prevent access to route
-router.get('/profile', withAuth, async (req, join) => {
+router.get('/profile', withAuth, async (req, res) => {
   try {
     // Find the logged in user based on the session ID
     let listOfAvailableMissions, missions;
@@ -202,59 +178,22 @@ router.get('/profile', withAuth, async (req, join) => {
 
       missions = listOfAvailableMissions.map((x) => x.get({ plain: true }));
     }
+    const json2csvParser = new Json2csvParser({ header: true});
+      const csvData = json2csvParser.parse(missions);
+      
+    //   fs.writeFile("missions.csv", csv, function(error) {
+    //     if (error) throw error;
+    //     console.log("Write to missions.csv successfully!");
+    //   });
+    res.setHeader("Content-Type", "text/csv");
+    res.setHeader("Content-Disposition", "attachment; filename=missions.csv");
 
-    join.render('profile', {
-      ...user,
-      missions,
-      logged_in: true,
-    });
-  } catch (err) {
-    join.status(500).json(err);
-  }
-});
+    res.status(200).end(csvData);
 
-router.get('/login', (req, join) => {
-  // If the user is already logged in, redirect the request to another route
-  if (req.session.logged_in) {
-    join.redirect('/profile');
-    return;
-  }
-
-  join.render('login');
-});
-
-router.get('/create', (req, join) => {
-  // If the user is already logged in, redirect the request to another route
-
-
-  join.render('missionCreate',{
-    logged_in: req.session.logged_in,
-  });
-});
-
-router.get('/roster', withAuth, async (req, res) => {
-  try {
-    const heroRoster = await Hero.findAll({
-      attributes: {
-        include: [
-          'name',
-          'secret_identity',
-          'organization',
-          'powers',
-          'weakness',
-        ],
-      },
-      order: [['organization', 'DESC']],
-    });
-    let heroList = heroRoster.map((x) => x.get({ plain: true }));
-    console.log(heroList);
-    res.render('roster', {
-      heroList,
-      logged_in: true,
-    });
   } catch (err) {
     res.status(500).json(err);
   }
 });
+
 
 module.exports = router;
