@@ -5,60 +5,61 @@
 </div>
 
 <div class="row mt-4">
-  <div class="col-md-6 mb-3 card shadow-card">
-    <table>
-      <h3 class="header-text pt-2">User Profile</h3>
-      <tr>
-        <td>Secret Identity: {{this.hero.secret_identity}}</td>
-      </tr>
-      <tr>
-        <td>Organization: {{this.hero.organization}}</td>
-      </tr>
-      <tr>
-        <td>Powers: {{this.hero.powers}}</td>
-      </tr>
-      <tr>
-        <td>Weakness: {{this.hero.weakness}}</td>
-      </tr>
-    </table>
+  <div class="col">
+    <div class="mb-3 card shadow-card p-2">
+      <table>
+        <h3 class="header-text">User Profile</h3>
+        <tr>
+          <td>Secret Identity: {{this.hero.secret_identity}}</td>
+        </tr>
+        <tr>
+          <td>Organization: {{this.hero.organization}}</td>
+        </tr>
+        <tr>
+          <td>Powers: {{this.hero.powers}}</td>
+        </tr>
+        <tr>
+          <td>Weakness: {{this.hero.weakness}}</td>
+        </tr>
+      </table>
+    </div>
+    {{#if this.hero.mission}}
+    <div class="card shadow-card mb-3 p-2">
+      <table>
+        <h3 class="header-text">Current Mission</h3>
+        <tr>
+          <td>Mission: {{this.hero.mission.mission_name}}</td>
+        </tr>
+        <tr>
+          <td>Description: {{this.hero.mission.description}} </td>
+        </tr>
+        <tr>
+          <td>Location: {{this.hero.mission.location}}</td>
+        </tr>
+        <tr>
+          <td>Date Reported: {{format_date this.hero.mission.date_created}}</td>
+        </tr>
+        <tr>
+          <td>Status: {{this.hero.mission.status}}</td>
+          <td>
+            <button class="btn btn-outline-dark" id='update-mission-btn'>Update Status</button>
+          </td>
+        </tr>
+      </table>
+      {{!-- FORM --}}
+      <form class='form' id='update-form'>
+        <h4>What is this mission's status?</h4>
+        <div class="form-group">
+          <input type='text' id='update-status-body' name='update-status-body'
+            data-id="{{this.hero.mission.mission_id}}">
+        </div>
+        <div class="mt-2 form-group">
+          <button type="submit" class="mt-2 btn btn-outline-dark" id="submit-update-btn">Update This Mission</button>
+        </div>
+      </form>
+    </div>
   </div>
-
-  {{#if this.hero.mission}}
-  <div class="col-md-6 mb-3">
-    <table>
-      <h3 class="header-text">Current Mission</h3>
-      <tr>
-        <td>Mission: {{this.hero.mission.mission_name}}</td>
-      </tr>
-      <tr>
-        <td>Description: {{this.hero.mission.description}} </td>
-      </tr>
-      <tr>
-        <td>Location: {{this.hero.mission.location}}</td>
-      </tr>
-      <tr>
-        <td>Date Reported: {{format_date this.hero.mission.date_created}}</td>
-      </tr>
-      <tr>
-        <td>Status: {{this.hero.mission.status}}</td>
-        <td>
-          <button id='update-mission-btn'>Update Status</button>
-        </td>
-      </tr>
-    </table>
-    {{!-- FORM --}}
-    <form class='form' id='update-form'>
-      <h4>What is this mission's status?</h4>
-      <div class="form-group">
-        <input type='text' id='update-status-body' name='update-status-body' data-id="{{this.hero.mission.mission_id}}">
-      </div>
-      <div class="form-group">
-        <button type="submit" class="btn btn-primary" id="submit-update-btn">Update This Mission</button>
-      </div>
-    </form>
-  </div>
-  {{else}}
-  <div class="col-md-6 mb-3">
+  <div class="col card shadow-card col-md-6 mb-3">
     <table class='table' id='open-missions-table'>
       <h3 class="header-text">Open Missions</h3>
       <thead>
@@ -81,6 +82,30 @@
       </tbody>
     </table>
   </div>
+  {{else}}
+  {{!-- <div class="card shadow-card col-md-6 mb-3">
+    <table class='table' id='open-missions-table'>
+      <h3 class="header-text">Open Missions</h3>
+      <thead>
+        <tr>
+          <th>Mission</th>
+          <th>Location</th>
+          <th>Status</th>
+          <th>Join</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each missions as |mission|}}
+        <tr class='table-secondary'>
+          <td>{{mission.mission_name}}</td>
+          <td>{{mission.location}}</td>
+          <td>{{mission.status}}</td>
+          <td><button class="joinMissionBtn" data-id="{{mission.mission_id}}">Join Mission</button></td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div> --}}
   {{/if}}
 </div>
 
