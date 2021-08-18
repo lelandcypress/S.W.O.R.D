@@ -35,6 +35,11 @@
       {{/each}}
     </tbody>
   </table>
+  <div class="text-center">
+    <span><button><a href="{{pageLinks.0.path}}">{{pageLinks.0.display}}</a></button></span>
+    <span><button><a href="{{pageLinks.1.path}}">{{pageLinks.1.display}}</a></button></span>
+    <span><button><a href="{{pageLinks.2.path}}">{{pageLinks.2.display}}</a></button></span>
+  </div>
 </div>
 <a href="/create"><button class="btn">Create Mission</button></a>
 {{#if logged_in}}
