@@ -1,4 +1,4 @@
-<h1>Active Missions</h1>
+<h1 class="header-text">Active Missions</h1>
 <div class="shadow-card mb-5">
   <table class="table table-container" id="missionTable">
     <thead>
@@ -27,7 +27,7 @@
           {{/each}}
         </td>
         {{else}}
-        <td><input type=submit id='join_mission' data-id="{{mission.mission_id}}" value='Join Mission'></td>
+        <td><input type="submit" class='join_mission' data-id="{{mission.mission_id}}" value='Join Mission'></td>
         {{/if}}
       </tr>
       {{/each}}
