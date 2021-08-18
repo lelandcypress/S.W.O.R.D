@@ -2,9 +2,22 @@ const router = require('express').Router();
 const { Mission, Hero, User } = require('../models');
 const { findAll } = require('../models/Hero');
 const withAuth = require('../utils/auth');
-var res = [];
-router.get('/', async (req, join) => {
+
+
+router.get(['/', '/:id([0-9]{1,})'], async (req, res) => {
+
   try {
+
+    let page, offset;
+
+    if (req.params.id) {
+      page = req.params.id;
+      offset = page * 20;
+    } else {
+      page = 0;
+      offset = 0;
+    }
+
     // Get all missions and JOIN with user data
     const currentMissionData = await Mission.findAll({
       attributes: {
@@ -26,6 +39,7 @@ router.get('/', async (req, join) => {
           nest: true,
         },
       ],
+      offset: offset,
       limit: 20,
       order: [['date_created', 'DESC']],
     });
@@ -84,23 +98,82 @@ router.get('/', async (req, join) => {
     }
     
 
-    const renderPage = async (res) => {
-      console.log("line 94 " + res);
-      join.status(200).render('homepage', {
+
+    let pageLinks = [];
+
+    if (page === 0) {
+      pageLinks = [
+        {
+          path: '/',
+          display: 1,
+        },
+        {
+          path: '/1',
+          display: 2,
+        },
+        {
+          path: '/2',
+          display: 3,
+        },
+      ];
+    } else {
+      pageLinks = [
+        {
+          path: `/${Number(page)-1}`,
+          display: `${Number(page)}`,
+        },
+        {
+          path: `/${Number(page)}`,
+          display: `${Number(page)+1}`,
+        },
+        {
+          path: `/${Number(page)+1}`,
+          display: `${Number(page)+2}`,
+        },
+      ];
+    }
+
+    const renderPage = async (join) => {
+      res.status(200).render('homepage', {
         missions,
         logged_in: req.session.logged_in,
 
-        canJoinNewMission: res.onMission
+        canJoinNewMission: join,
+        pageLinks
       });
     }
-    canJoin(req.session.user_id);
-    renderPage(res);
+
+    if (page < 0) res.redirect('/');
+
+    if (!missions[0]) {
+      if (page <= 1) {
+        res.redirect('/');
+      }
+      res.redirect(`/${page-1}`);
+    }
+
+    if (!canJoin(req.session.user_id)) {
+      renderPage(false);
+    } else {
+      renderPage(true);
+    }
+//     const renderPage = async (res) => {
+//       console.log("line 94 " + res);
+//       join.status(200).render('homepage', {
+//         missions,
+//         logged_in: req.session.logged_in,
+//         canJoinNewMission: res.onMission
+//       });
+//     }
+//     canJoin(req.session.user_id);
+//     renderPage(res);
     
-    // if (canJoin(req.session.user_id)) {
-    //   renderPage(false);
-    // } else {
-    //   renderPage(true);
-    // }
+
+//     // if (canJoin(req.session.user_id)) {
+//     //   renderPage(false);
+//     // } else {
+//     //   renderPage(true);
+//     // }
 
   } catch (err) {
     join.status(500).json(err);
