@@ -23,8 +23,36 @@ const joinMission = async (event) => {
   }
 }
 
+
+
+
+
+
+const printCSV = async (event) => {
+  event.preventDefault();
+  console.log(event)
+    const response = await fetch(`/api/data/missions`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (response.ok) {
+      document.location.replace(`/api/data/missions`);
+    } else {
+      document.location.replace(`/login`);
+    }
+  
+}
+
 const joinBtn = document.querySelectorAll('.join_mission');
 console.log(joinBtn);
 if (joinBtn[0]) {
   [...joinBtn].map(btn => btn.addEventListener('click', joinMission));
+}
+
+const printBtn = document.querySelectorAll('.print');
+console.log(printBtn);
+if (printBtn) {
+  [...printBtn].map(btn => btn.addEventListener('click', printCSV));
 }

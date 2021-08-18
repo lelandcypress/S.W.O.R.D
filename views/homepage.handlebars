@@ -37,5 +37,9 @@
   </table>
 </div>
 <a href="/create"><button class="btn">Create Mission</button></a>
+{{#if logged_in}}
+<button class="btn print">Print Table</button>
+{{else}}
+{{/if}}
 
 <script src="./js/homepage.js"></script>
