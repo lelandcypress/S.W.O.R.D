@@ -25,15 +25,15 @@ router.get('/', async (req, res) => {
           nest: true,
         },
       ],
+      limit: 20,
       order: [['date_created', 'DESC']],
     });
-    // console.log(currentMissionData);
+
     let missions = [];
     // Serialize data so the template can read it
     currentMissionData
       .map((x) => x.get({ plain: true }))
       .map((x) => {
-        console.log(x.heros);
         missions.push({
           id: x.id,
           name: x.name,
@@ -56,11 +56,44 @@ router.get('/', async (req, res) => {
         });
       });
 
-    console.log(missions);
-    res.status(200).render('homepage', {
-      missions,
-      logged_in: req.session.logged_in,
-    });
+    const canJoin = async (user_id) => {
+      const userData = await User.findByPk(user_id, {
+        attributes: { exclude: [
+          'password',
+          'id',
+          'username',
+          'email'
+          ]
+        },
+        include: [
+          {
+            model: Hero,
+            attributes: [
+              'mission_id',
+            ],
+          },
+        ],
+      });
+
+      const user = userData.get({ plain:true });
+
+      if (user.hero.mission_id) return false;
+      return true;
+    }
+
+    const renderPage = async (join) => {
+      res.status(200).render('homepage', {
+        missions,
+        logged_in: req.session.logged_in,
+        canJoinNewMission: join
+      });
+    }
+
+    if (!canJoin(req.session.user_id)) {
+      renderPage(false);
+    } else {
+      renderPage(true);
+    }
   } catch (err) {
     res.status(500).json(err);
   }
