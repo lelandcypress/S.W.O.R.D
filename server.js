@@ -4,6 +4,7 @@ const session = require('express-session');
 const exphbs = require('express-handlebars');
 const routes = require('./controllers');
 const helpers = require('./utils/helpers');
+const {v4 : uuidv4} = require('uuid');
 
 const sequelize = require('./config/connection');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
@@ -17,13 +18,16 @@ const hbs = exphbs.create({
 });
 
 const sess = {
-  secret: 'Super secret secret',
-  cookie: {},
+  secret: uuidv4(),
+  cookie: {
+    // 30 Minutes
+    maxAge: 1800000,
+  },
   resave: false,
   saveUninitialized: true,
   store: new SequelizeStore({
-    db: sequelize,
-  }),
+    db: sequelize
+  })
 };
 
 app.use(session(sess));
