@@ -77,7 +77,7 @@ router.get(['/', '/:id([0-9]{1,})'], async (req, res) => {
 
     let pageLinks = [];
     // Define page render vars
-    if (page === 0) {
+    if (Number(page) === 0) {
       pageLinks = [{
         path: '/',
         display: 1,
@@ -108,7 +108,7 @@ router.get(['/', '/:id([0-9]{1,})'], async (req, res) => {
     }
 
     // If page invalid, redirect back
-    if (page < 0) res.redirect('/');
+    if (Number(page) < 0) res.redirect('/');
 
     // If page empty, redirect back
     if (!missions[0]) {
