@@ -8,44 +8,50 @@ const withAuth = require('../utils/auth');
 
 // Homepage UBER route
 router.get(['/', '/:id([0-9]{1,})'], async (req, res) => {
-  try {
-    let page, offset;
+  let page, offset;
+  // Define page vars
+  if (req.params.id) {
+    page = req.params.id;
+    offset = page * 20;
+  } else {
+    page = 0;
+    offset = 0;
+  }
 
-    // Define page vars
-    if (req.params.id) {
-      page = req.params.id;
-      offset = page * 20;
-    } else {
-      page = 0;
-      offset = 0;
-    }
-
-    // Get all missions and JOIN with user data
-    const currentMissionData = await Mission.findAll({
-      attributes: {
-        include: [
-          ['id', 'mission_id'],
-          ['name', 'mission_name'],
-          'location',
-          'date_created',
-          'priority',
-          'status',
-        ],
-      },
-      include: [{
-        model: Hero,
-        attributes: ['name'],
-        required: false,
-        raw: true,
-        nest: true,
-      },],
-      offset: offset,
-      limit: 20,
-      order: [
-        ['date_created', 'DESC']
+  // Get all missions and JOIN with user data
+  const currentMissionData = await Mission.findAll({
+    attributes: {
+      include: [
+        ['id', 'mission_id'],
+        ['name', 'mission_name'],
+        'location',
+        'date_created',
+        'priority',
+        'status',
       ],
-    });
+    },
+    include: [{
+      model: Hero,
+      attributes: ['name'],
+      required: false,
+      raw: true,
+      nest: true,
+    },],
+    offset: offset,
+    limit: 20,
+    order: [
+      ['date_created', 'DESC']
+    ],
+  });
 
+  // If page empty, redirect back
+  if (!currentMissionData[0]) {
+    if (page <= 1) {
+      res.redirect('/');
+    } else {
+      res.redirect(`/${Number(page) - 1}`);
+    }
+  } else {
     let missions = [];
     // Serialize data so the template can read it
     currentMissionData
@@ -108,24 +114,17 @@ router.get(['/', '/:id([0-9]{1,})'], async (req, res) => {
     }
 
     // If page invalid, redirect back
-    if (Number(page) < 0) res.redirect('/');
-
-    // If page empty, redirect back
-    if (!missions[0]) {
-      if (page <= 1) {
-        res.redirect('/');
-      } else {
-        res.redirect(`/${Number(page) - 1}`);
-      }
+    if (page < 0) res.redirect('/');
+    
+    try {
+      res.status(200).render('homepage', {
+        missions,
+        logged_in: req.session.logged_in,
+        pageLinks,
+      });
+    } catch {
+      res.status(500).json(err);
     }
-
-    res.status(200).render('homepage', {
-      missions,
-      logged_in: req.session.logged_in,
-      pageLinks,
-    });
-  } catch (err) {
-    res.status(500).json(err);
   }
 });
 
