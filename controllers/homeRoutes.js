@@ -4,15 +4,14 @@ const {
   Hero,
   User
 } = require('../models');
-const {
-  findAll
-} = require('../models/Hero');
 const withAuth = require('../utils/auth');
 
+// Homepage UBER route
 router.get(['/', '/:id([0-9]{1,})'], async (req, res) => {
   try {
     let page, offset;
 
+    // Define page vars
     if (req.params.id) {
       page = req.params.id;
       offset = page * 20;
@@ -39,7 +38,7 @@ router.get(['/', '/:id([0-9]{1,})'], async (req, res) => {
         required: false,
         raw: true,
         nest: true,
-      }, ],
+      },],
       offset: offset,
       limit: 20,
       order: [
@@ -76,112 +75,55 @@ router.get(['/', '/:id([0-9]{1,})'], async (req, res) => {
         });
       });
 
-    const canJoin = async (user_id) => {
-      if (!user_id) return false;
-
-      const userData = await User.findByPk(user_id, {
-        attributes: {
-          exclude: ['password', 'id', 'username', 'email']
-        },
-        include: [{
-          model: Hero,
-          attributes: ['mission_id'],
-        }, ],
-      });
-
-
-
-      const user = userData.get({
-        plain: true
-      });
-      console.log("line 82 " + user.hero.mission_id);
-      const heromisID = user.hero.mission_id;
-      console.log("Line 84 " + heromisID);
-      // if (heromisID){
-      //   res.push({onMission: true});
-      // } else{
-      //   res.push({onMission: false});
-      // };
-      console.log("Line 90 " + res)
-    }
-
-
-
     let pageLinks = [];
-
+    // Define page render vars
     if (page === 0) {
       pageLinks = [{
-          path: '/',
-          display: 1,
-        },
-        {
-          path: '/1',
-          display: 2,
-        },
-        {
-          path: '/2',
-          display: 3,
-        },
+        path: '/',
+        display: 1,
+      },
+      {
+        path: '/1',
+        display: 2,
+      },
+      {
+        path: '/2',
+        display: 3,
+      },
       ];
     } else {
-
       pageLinks = [{
-          path: `/${Number(page)-1}`,
-          display: `${Number(page)}`,
-        },
-        {
-          path: `/${Number(page)}`,
-          display: `${Number(page) + 1}`,
-        },
-        {
-          path: `/${Number(page) + 1}`,
-          display: `${Number(page) + 2}`,
-        },
+        path: `/${Number(page) - 1}`,
+        display: `${Number(page)}`,
+      },
+      {
+        path: `/${Number(page)}`,
+        display: `${Number(page) + 1}`,
+      },
+      {
+        path: `/${Number(page) + 1}`,
+        display: `${Number(page) + 2}`,
+      },
       ];
     }
 
-    const renderPage = async (join) => {
-      res.status(200).render('homepage', {
-        missions,
-        logged_in: req.session.logged_in,
-
-        canJoinNewMission: join,
-        pageLinks,
-      });
-    };
-
+    // If page invalid, redirect back
     if (page < 0) res.redirect('/');
 
+    // If page empty, redirect back
     if (!missions[0]) {
       if (page <= 1) {
         res.redirect('/');
+      } else {
+        res.redirect(`/${Number(page) - 1}`);
       }
-      res.redirect(`/${page - 1}`);
     }
 
-    if (!canJoin(req.session.user_id)) {
-      renderPage(false);
-    } else {
-      renderPage(true);
-    }
-    //     const renderPage = async (res) => {
-    //       console.log("line 94 " + res);
-    //       join.status(200).render('homepage', {
-    //         missions,
-    //         logged_in: req.session.logged_in,
-    //         canJoinNewMission: res.onMission
-    //       });
-    //     }
-    //     canJoin(req.session.user_id);
-    //     renderPage(res);
-
-
-    //     // if (canJoin(req.session.user_id)) {
-    //     //   renderPage(false);
-    //     // } else {
-    //     //   renderPage(true);
-    //     // }
-
+    res.status(200).render('homepage', {
+      missions,
+      logged_in: req.session.logged_in,
+      pageLinks,
+    });
   } catch (err) {
     res.status(500).json(err);
   }
@@ -205,22 +147,17 @@ router.get('/mission/:id', withAuth, async (req, res) => {
       include: [{
         model: Hero,
         attributes: ['name'],
-      }, ],
+      },],
     });
 
     // Serialize data so the template can read it
-
     let mission = selectedMissionData.get({ plain: true });
-    console.log(mission.heros.length);
+
     if (mission.heros.length === 0) {
       mission.hero = 'Unassigned';
-      console.log(mission);
     } else {
       const heroname = mission.heros[0].name;
       mission.hero = heroname;
-
-
-      console.log(mission);
     }
 
     res.status(200).render('mission', {
@@ -261,17 +198,14 @@ router.get('/profile', withAuth, async (req, res) => {
             'status',
             'description',
           ],
-        }, ],
-      }, ],
+        },],
+      },],
     });
 
     const user = userData.get({
       plain: true
     });
 
-    // console.log(user.hero.mission);
-
-    // if (!user.hero.mission || user.hero.mission) {
     listOfAvailableMissions = await Mission.findAll({
       attributes: {
         include: [
@@ -291,7 +225,6 @@ router.get('/profile', withAuth, async (req, res) => {
     missions = listOfAvailableMissions.map((x) => x.get({
       plain: true
     }));
-    // }
 
     res.render('profile', {
       ...user,
@@ -316,10 +249,7 @@ router.get('/login', (req, res) => {
 router.get('/create', (req, res) => {
   // If the user is already logged in, redirect the request to another route
 
-
-
   res.render('missionCreate', {
-
     logged_in: req.session.logged_in,
   });
 });
@@ -343,7 +273,7 @@ router.get('/roster', withAuth, async (req, res) => {
     let heroList = heroRoster.map((x) => x.get({
       plain: true
     }));
-    console.log(heroList);
+
     res.render('roster', {
       heroList,
       logged_in: true,
