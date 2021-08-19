@@ -9,6 +9,9 @@ function handleUpdateStatusButton(event) {
     document
         .getElementById('update-form')
         .setAttribute('style', 'display: block;');
+    document
+        .getElementById('update-mission-btn')
+        .setAttribute('style', 'opacity: 0; cursor: auto;')
 }
 
 const handleStatusSubmitButton = async (event) => {
@@ -22,7 +25,9 @@ const handleStatusSubmitButton = async (event) => {
     if (status) {
         const response = await fetch(`/api/missions/${id}`, {
             method: 'PUT',
-            body: JSON.stringify({ body }),
+            body: JSON.stringify({
+                body
+            }),
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -41,7 +46,7 @@ const handleStatusSubmitButton = async (event) => {
 const joinMission = async (event) => {
     event.preventDefault();
     console.log('Click!');
-    if(event.target.hasAttribute('data-id')){
+    if (event.target.hasAttribute('data-id')) {
         const id = event.target.getAttribute('data-id');
         console.log(`Clicked on button: ${id}`);
         const response = await fetch(`/api/missions/heroassign/${id}`, {
@@ -50,7 +55,7 @@ const joinMission = async (event) => {
                 id,
             }),
             headers: {
-              'Content-Type': 'application/json',
+                'Content-Type': 'application/json',
             },
         });
 
@@ -61,8 +66,8 @@ const joinMission = async (event) => {
         }
     }
 }
-    
-    
+
+
 if (joinMissionTable) {
     joinMissionTable.addEventListener('click', joinMission);
 }

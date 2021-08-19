@@ -2,10 +2,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Karla:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
 
-/* * {
-    font-family: 'Lato', sans-serif;
-} */
-
 * {
     font-family: 'Karla', sans-serif;
 }
@@ -13,6 +9,10 @@
 .header-text {
     font-family: 'Bangers', sans-serif;
     font-kerning: 4px;
+}
+
+.form-input {
+    width: 300px;
 }
 
 #update-form {
@@ -47,13 +47,15 @@
 
 .modal-launch {
     cursor: pointer;
+    text-decoration: none;
 }
 
-.modal-launch {
+.sign-modal-launch {
     text-decoration: underline;
+    cursor: pointer;
 }
 
-.btn {
+.btn_animate {
     background-color: #F48224;
     color: #fff;
     font-size: 15px;
@@ -65,12 +67,12 @@
     transition: all 0.3s ease 0s;
 }
 
-.btn:hover,
-.btn.active:hover {
+.btn_animate:hover,
+.btn_animate.active:hover {
     color: #ffffff;
 }
 
-.btn:before {
+.btn_animate:before {
     content: "";
     position: absolute;
     top: -7px;
@@ -81,7 +83,7 @@
     transition: all 0.3s ease 0s;
 }
 
-.btn:after {
+.btn_animate:after {
     content: "";
     position: absolute;
     bottom: -7px;
@@ -92,17 +94,27 @@
     transition: all 0.3s ease 0s;
 }
 
-.btn:hover:before,
-.btn:hover:after,
-.btn.active:before,
-.btn.active:after {
+.btn_animate:hover:before,
+.btn_animate:hover:after,
+.btn_animate.active:before,
+.btn_animate.active:after {
     width: 100%;
 }
 
 @media screen and (max-width: 575px) {
-    .btn {
+    .btn_animate {
         margin-bottom: 50px !important;
     }
+}
+
+.page-button a {
+    text-decoration: none;
+    color: black;
+}
+
+.page-button:hover a {
+    text-decoration: underline;
+    color: white;
 }
 
 table {
@@ -156,4 +168,12 @@ th {
 
 .login-card {
     box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+}
+
+.shadow-card-right {
+    box-shadow: rgba(240, 143, 46, 0.4) 5px 5px, rgba(240, 140, 46, 0.3) 10px 10px, rgba(240, 135, 46, 0.2) 15px 15px, rgba(240, 130, 46, 0.1) 20px 20px, rgba(240, 120, 46, 0.05) 25px 25px;
+}
+
+.new-mission-form {
+    width: 475px;
 }

@@ -11,10 +11,10 @@
         <th scope="col">Hero Assigned</th>
       </tr>
     </thead>
-    <tbody id="missionTable">
+    <tbody id="missionTable" class="table-striped">
       <!-- Loop over each object in the mission array -->
       {{#each missions as |mission| }}
-      <tr class="table-secondary">
+      <tr class="table-light">
         <th scope="row"><a href="/mission/{{mission.mission_id}}">{{mission.mission_id}}</a></th>
         <td><a href="/mission/{{mission.mission_id}}">{{mission.mission_name}}</a></td>
         <td><a href="/mission/{{mission.mission_id}}">{{format_date mission.date_created}}</a></td>
@@ -25,8 +25,8 @@
           {{hero}}&nbsp;
           {{/each}}
         </td>
-       {{log ../canJoinNewMission}}
-       {{#if ../canJoinNewMission}}
+        {{log ../canJoinNewMission}}
+        {{#if ../canJoinNewMission}}
         <td></td>
         {{else}}
         <td><input type="submit" class='join_mission' data-id="{{mission.mission_id}}" value='Join Mission'></td>
@@ -36,14 +36,23 @@
     </tbody>
   </table>
   <div class="text-center">
-    <span><button><a href="{{pageLinks.0.path}}">{{pageLinks.0.display}}</a></button></span>
-    <span><button><a href="{{pageLinks.1.path}}">{{pageLinks.1.display}}</a></button></span>
-    <span><button><a href="{{pageLinks.2.path}}">{{pageLinks.2.display}}</a></button></span>
+    <span><button class="btn btn-outline-dark page-button mb-2"><a
+          href="{{pageLinks.0.path}}">{{pageLinks.0.display}}</a></button></span>
+    <span><button class="btn btn-outline-dark page-button mb-2"><a
+          href="{{pageLinks.1.path}}">{{pageLinks.1.display}}</a></button></span>
+    <span><button class="btn btn-outline-dark page-button mb-2"><a
+          href="{{pageLinks.2.path}}">{{pageLinks.2.display}}</a></button></span>
   </div>
 </div>
-<a href="/create"><button class="btn">Create Mission</button></a>
-{{#if logged_in}}
-<button class="btn print">Print Table</button>
+<div class="row">
+  <div class="col-6">
+    <a href="/create"><button class="btn_animate btn-outline-dark">Create Mission</button></a>
+  </div>
+  {{#if logged_in}}
+  <div class="col-6 d-flex justify-content-end">
+    <button class="btn_animate btn-outline-dark print">Print Table</button>
+  </div>
+</div>
 {{else}}
 {{/if}}
 
