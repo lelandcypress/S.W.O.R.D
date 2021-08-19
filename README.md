@@ -21,6 +21,8 @@ Ensure you have all node packages installed. Run NPM start or Nodemon. Follow pr
 6. You will have access to a user profile which will display your information, your assinged mission.
 7. Within this user profile you will be able to update the status of the mission.
 
+deployed app: https://frozen-harbor-76666.herokuapp.com/
+
 ## Questions
 If you have any questions about this project, you can find us on GitHub as [PRicoSaint](https://github.com/PRicoSaint), [jcpickens0215](https://github.com/jcpickens0215), [lelandcypress](https://github.com/lelandcypress), [radams017](https://github.com/radams017)
 
