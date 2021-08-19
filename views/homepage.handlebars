@@ -25,12 +25,6 @@
           {{hero}}&nbsp;
           {{/each}}
         </td>
-        {{log ../canJoinNewMission}}
-        {{#if ../canJoinNewMission}}
-        <td></td>
-        {{else}}
-        <td><input type="submit" class='join_mission' data-id="{{mission.mission_id}}" value='Join Mission'></td>
-        {{/if}}
       </tr>
       {{/each}}
     </tbody>

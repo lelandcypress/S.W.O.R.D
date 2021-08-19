@@ -45,10 +45,9 @@ const handleStatusSubmitButton = async (event) => {
 
 const joinMission = async (event) => {
     event.preventDefault();
-    console.log('Click!');
+
     if (event.target.hasAttribute('data-id')) {
         const id = event.target.getAttribute('data-id');
-        console.log(`Clicked on button: ${id}`);
         const response = await fetch(`/api/missions/heroassign/${id}`, {
             method: 'PUT',
             body: JSON.stringify({
