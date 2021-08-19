@@ -3,11 +3,8 @@ const { Mission, Hero, User } = require('../models');
 const { findAll } = require('../models/Hero');
 const withAuth = require('../utils/auth');
 
-
 router.get(['/', '/:id([0-9]{1,})'], async (req, res) => {
-
   try {
-
     let page, offset;
 
     if (req.params.id) {
@@ -84,20 +81,17 @@ router.get(['/', '/:id([0-9]{1,})'], async (req, res) => {
         ],
       });
 
-
-      const user = userData.get({ plain:true });
-      console.log("line 82 " + user.hero.mission_id);
+      const user = userData.get({ plain: true });
+      console.log('line 82 ' + user.hero.mission_id);
       const heromisID = user.hero.mission_id;
-      console.log("Line 84 " +heromisID);
-      if (heromisID){
-        res.push({onMission: true});
-      } else{
-        res.push({onMission: false});
-      };
-      console.log("Line 90 " + res)
-    }
-    
-
+      console.log('Line 84 ' + heromisID);
+      if (heromisID) {
+        res.push({ onMission: true });
+      } else {
+        res.push({ onMission: false });
+      }
+      console.log('Line 90 ' + res);
+    };
 
     let pageLinks = [];
 
@@ -119,16 +113,16 @@ router.get(['/', '/:id([0-9]{1,})'], async (req, res) => {
     } else {
       pageLinks = [
         {
-          path: `/${Number(page)-1}`,
+          path: `/${Number(page) - 1}`,
           display: `${Number(page)}`,
         },
         {
           path: `/${Number(page)}`,
-          display: `${Number(page)+1}`,
+          display: `${Number(page) + 1}`,
         },
         {
-          path: `/${Number(page)+1}`,
-          display: `${Number(page)+2}`,
+          path: `/${Number(page) + 1}`,
+          display: `${Number(page) + 2}`,
         },
       ];
     }
@@ -139,9 +133,9 @@ router.get(['/', '/:id([0-9]{1,})'], async (req, res) => {
         logged_in: req.session.logged_in,
 
         canJoinNewMission: join,
-        pageLinks
+        pageLinks,
       });
-    }
+    };
 
     if (page < 0) res.redirect('/');
 
@@ -149,7 +143,7 @@ router.get(['/', '/:id([0-9]{1,})'], async (req, res) => {
       if (page <= 1) {
         res.redirect('/');
       }
-      res.redirect(`/${page-1}`);
+      res.redirect(`/${page - 1}`);
     }
 
     if (!canJoin(req.session.user_id)) {
@@ -157,24 +151,22 @@ router.get(['/', '/:id([0-9]{1,})'], async (req, res) => {
     } else {
       renderPage(true);
     }
-//     const renderPage = async (res) => {
-//       console.log("line 94 " + res);
-//       join.status(200).render('homepage', {
-//         missions,
-//         logged_in: req.session.logged_in,
-//         canJoinNewMission: res.onMission
-//       });
-//     }
-//     canJoin(req.session.user_id);
-//     renderPage(res);
-    
+    //     const renderPage = async (res) => {
+    //       console.log("line 94 " + res);
+    //       join.status(200).render('homepage', {
+    //         missions,
+    //         logged_in: req.session.logged_in,
+    //         canJoinNewMission: res.onMission
+    //       });
+    //     }
+    //     canJoin(req.session.user_id);
+    //     renderPage(res);
 
-//     // if (canJoin(req.session.user_id)) {
-//     //   renderPage(false);
-//     // } else {
-//     //   renderPage(true);
-//     // }
-
+    //     // if (canJoin(req.session.user_id)) {
+    //     //   renderPage(false);
+    //     // } else {
+    //     //   renderPage(true);
+    //     // }
   } catch (err) {
     join.status(500).json(err);
   }
@@ -205,10 +197,16 @@ router.get('/mission/:id', withAuth, async (req, join) => {
 
     // Serialize data so the template can read it
     let mission = selectedMissionData.get({ plain: true });
-    const heroname = mission.heros[0].name;
-    mission.hero = heroname;
+    console.log(mission.heros.length);
+    if (mission.heros.length === 0) {
+      mission.hero = 'Unassigned';
+      console.log(mission);
+    } else {
+      const heroname = mission.heros[0].name;
+      mission.hero = heroname;
 
-
+      console.log(mission);
+    }
 
     join.status(200).render('mission', {
       ...mission,
@@ -299,8 +297,7 @@ router.get('/login', (req, join) => {
 router.get('/create', (req, join) => {
   // If the user is already logged in, redirect the request to another route
 
-
-  join.render('missionCreate',{
+  join.render('missionCreate', {
     logged_in: req.session.logged_in,
   });
 });
