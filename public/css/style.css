@@ -6,6 +6,10 @@
     font-family: 'Karla', sans-serif;
 }
 
+body {
+    background-color: #f8f9fa;
+}
+
 .header-text {
     font-family: 'Bangers', sans-serif;
     font-kerning: 4px;
@@ -154,6 +158,7 @@ th {
 }
 
 .shadow-card {
+    background-color: white;
     box-shadow: rgba(240, 143, 46, 0.4) -5px 5px, rgba(240, 140, 46, 0.3) -10px 10px, rgba(240, 135, 46, 0.2) -15px 15px, rgba(240, 130, 46, 0.1) -20px 20px, rgba(240, 120, 46, 0.05) -25px 25px;
 }
 
@@ -176,4 +181,8 @@ th {
 
 .new-mission-form {
     width: 475px;
+}
+
+.hover:hover {
+    text-decoration: underline;
 }
