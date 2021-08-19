@@ -3,30 +3,30 @@
         <h1 class="header-text">Hero Roster</h1>
     </div>
 </div>
-  
-    <div class="col-md-6 mb-3 shadow-card">
-        <table class='table table-container' id='roster-table'>
-            <thead>
-                <tr>
-                    <th>Hero Name</th>
-                    <th>Secret Identity</th>
-                    <th>Organization</th>
-                    <th>Super Powers</th>
-                    <th>Weakness</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{#each heroList as |hero|}}
-                <tr class='table-secondary'>
-                    <td>{{name}}</td>
-                    <td>{{hero.secret_identity}}</td>
-                    <td>{{hero.organization}}</td>
-                    <td>{{hero.powers}}</td>
-                    <td>{{hero.weakness}}</td>
-                </tr>
-                {{/each}}
-            </tbody>
-        </table>
-    </div>
+
+<div class="col-md-6 mb-3 shadow-card w-100">
+    <table class='table table-container' id='roster-table'>
+        <thead>
+            <tr>
+                <th>Hero Name</th>
+                <th>Secret Identity</th>
+                <th>Organization</th>
+                <th>Super Powers</th>
+                <th>Weakness</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each heroList as |hero|}}
+            <tr class='table-light'>
+                <td>{{name}}</td>
+                <td>{{hero.secret_identity}}</td>
+                <td>{{hero.organization}}</td>
+                <td>{{hero.powers}}</td>
+                <td>{{hero.weakness}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
 
 </div>

@@ -2,10 +2,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Karla:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
 
-/* * {
-    font-family: 'Lato', sans-serif;
-} */
-
 * {
     font-family: 'Karla', sans-serif;
 }
@@ -109,6 +105,16 @@
     .btn_animate {
         margin-bottom: 50px !important;
     }
+}
+
+.page-button a {
+    text-decoration: none;
+    color: black;
+}
+
+.page-button:hover a {
+    text-decoration: underline;
+    color: white;
 }
 
 table {

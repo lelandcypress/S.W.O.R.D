@@ -48,7 +48,7 @@
       </table>
       {{!-- FORM --}}
       <form class='form' id='update-form'>
-        <h4 class="header-text">What is this mission's status?</h4>
+        <h4 class="header-text">What is this mission's status? Active or Complete?</h4>
         <div class="form-group">
           <input type='text' id='update-status-body' name='update-status-body'
             data-id="{{this.hero.mission.mission_id}}">
@@ -59,7 +59,7 @@
       </form>
     </div>
   </div>
-  <div class="col card shadow-card-right col-md-6 mb-3">
+  <div class="col card shadow-card-right col-md-6 mb-3 p-2">
     <table class='table' id='open-missions-table'>
       <h3 class="header-text">Open Missions</h3>
       <thead>
@@ -72,17 +72,18 @@
       </thead>
       <tbody>
         {{#each missions as |mission|}}
-        <tr class='table-secondary'>
+        <tr class='table-light'>
           <td>{{mission.mission_name}}</td>
           <td>{{mission.location}}</td>
           <td>{{mission.status}}</td>
-          <td><button class="joinMissionBtn" data-id="{{mission.mission_id}}">Join Mission</button></td>
+          <td><button class="btn btn-outline-dark joinMissionBtn" data-id="{{mission.mission_id}}">Join
+              Mission</button>
+          </td>
         </tr>
         {{/each}}
       </tbody>
     </table>
   </div>
-  {{else}}
   {{!-- <div class="card shadow-card col-md-6 mb-3">
     <table class='table' id='open-missions-table'>
       <h3 class="header-text">Open Missions</h3>
