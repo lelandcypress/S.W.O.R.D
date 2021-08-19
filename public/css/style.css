@@ -186,3 +186,7 @@ th {
 .hover:hover {
     text-decoration: underline;
 }
+
+.user-profile li {
+    list-style: none;
+}
