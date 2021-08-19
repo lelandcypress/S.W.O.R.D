@@ -87,59 +87,6 @@
       </table>
     </div>
   </div>
-<<<<<<< HEAD
-=======
-  {{else}}
-  <div class="col card shadow-card-right col-md-6 mb-3 p-2">
-    <table class='table' id='open-missions-table'>
-      <h3 class="header-text">Open Missions</h3>
-      <thead>
-        <tr>
-          <th>Mission</th>
-          <th>Location</th>
-          <th>Status</th>
-          <th>Join</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each missions as |mission|}}
-        <tr class='table-light'>
-          <td>{{mission.mission_name}}</td>
-          <td>{{mission.location}}</td>
-          <td>{{mission.status}}</td>
-          <td><button class="btn btn-outline-dark joinMissionBtn" data-id="{{mission.mission_id}}">Join
-              Mission</button>
-          </td>
-        </tr>
-        {{/each}}
-      </tbody>
-    </table>
-  </div>
-  {{!-- <div class="card shadow-card col-md-6 mb-3">
-    <table class='table' id='open-missions-table'>
-      <h3 class="header-text">Open Missions</h3>
-      <thead>
-        <tr>
-          <th>Mission</th>
-          <th>Location</th>
-          <th>Status</th>
-          <th>Join</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each missions as |mission|}}
-        <tr class='table-secondary'>
-          <td>{{mission.mission_name}}</td>
-          <td>{{mission.location}}</td>
-          <td>{{mission.status}}</td>
-          <td><button class="joinMissionBtn" data-id="{{mission.mission_id}}">Join Mission</button></td>
-        </tr>
-        {{/each}}
-      </tbody>
-    </table>
-  </div> --}}
-  {{/if}}
->>>>>>> main
 </div>
 
 
